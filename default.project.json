@@ -1,0 +1,10 @@
+{
+	"name": "IPS2DevKit",
+	"tree": {
+		"$path": "src",
+
+		"Packages": {
+			"$path": "Packages"
+		}
+	}
+}

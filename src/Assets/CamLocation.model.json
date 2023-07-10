@@ -1,0 +1,39 @@
+{
+	"ClassName": "Part",
+
+	"Properties": {
+		"Attributes": {
+			"DisplayName": {"String": ""}
+		},
+		"Color": {
+			"Color3uint8": [4, 175, 236]
+		},
+		"Size": [4.6, 0.4, 4.6],
+		"Transparency": 0.5,
+		"Material": "SmoothPlastic",
+		"Anchored": true,
+		"CanQuery": false,
+		"CanTouch": false,
+		"CanCollide": false,
+		"CastShadow": false
+	},
+
+	"Children": [
+		{
+			"ClassName": "Decal",
+	
+			"Properties": {
+				"Texture": "rbxassetid://159037887",
+				"Face": "Top"
+			}
+		},
+		{
+			"ClassName": "Decal",
+	
+			"Properties": {
+				"Texture": "rbxassetid://159037887",
+				"Face": "Bottom"
+			}
+		}
+	]
+}

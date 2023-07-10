@@ -1,0 +1,12 @@
+[package]
+name = "crystalflxme/ips2devkit"
+version = "0.1.0"
+license = "MIT"
+registry = "https://github.com/upliftgames/wally-index"
+realm = "shared"
+exclude = ["*"]
+private = true
+
+[dependencies]
+ReactRoblox = "jsdotlua/react-roblox@17.0.1"
+React = "jsdotlua/react@17.0.1"
