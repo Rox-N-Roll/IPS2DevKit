@@ -24,8 +24,9 @@ local function runGroups(groupNames: { string }): { Types.LintResult }
 	end
 
 	for _, groupName in groupNames do
-		for _, result in groups[groupName](map) do
-			table.insert(results, result)
+		for _, result: Types.LintResultPartial in groups[groupName](map) do
+			result.name = groupName
+			table.insert(results, result :: Types.LintResult)
 		end
 	end
 

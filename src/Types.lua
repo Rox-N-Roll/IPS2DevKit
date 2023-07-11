@@ -4,4 +4,9 @@ export type LintResult = {
 	statusMessage: string,
 }
 
+export type LintResultPartial = {
+	ok: boolean,
+	statusMessage: string,
+}
+
 return nil
