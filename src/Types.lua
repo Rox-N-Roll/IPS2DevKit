@@ -1,7 +1,7 @@
-export type LinterResult = {
+export type LintResult = {
 	ok: boolean,
-	groupName: string,
-	statusMessage: string?,
+	name: string,
+	statusMessage: string,
 }
 
 return nil

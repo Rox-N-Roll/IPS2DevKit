@@ -9,31 +9,40 @@ end
 
 local MapLinter = {}
 
-local function runGroup(groupName: string): Types.LinterResult
-	local map = workspace:FindFirstChild("Map")
-	if not map or not map:IsA("Folder") then
-		return {
-			ok = false,
-			groupName = groupName,
-			statusMessage = "Unable to find map.",
-		}
-	end
-
-	return groups[groupName](map)
-end
-
-function MapLinter.Group(name: string): { Types.LinterResult }
-	return { runGroup(name) }
-end
-
-function MapLinter.All(): { Types.LinterResult }
+local function runGroups(groupNames: { string }): { Types.LintResult }
 	local results = {}
 
-	for groupName in groups do
-		table.insert(results, runGroup(groupName))
+	local map = workspace:FindFirstChild("Map")
+	if not map or not map:IsA("Folder") then
+		table.insert(results, {
+			ok = false,
+			name = "MapLinter",
+			statusMessage = "Unable to find map.",
+		})
+
+		return results -- Skip lint groups, map needs to exist first
+	end
+
+	for _, groupName in groupNames do
+		for _, result in groups[groupName](map) do
+			table.insert(results, result)
+		end
 	end
 
 	return results
+end
+
+function MapLinter.Group(name: string): { Types.LintResult }
+	return runGroups({ name })
+end
+
+function MapLinter.All(): { Types.LintResult }
+	local groupNames = {}
+	for groupName in groups do
+		table.insert(groupNames, groupName)
+	end
+
+	return runGroups(groupNames)
 end
 
 return MapLinter

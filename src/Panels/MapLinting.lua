@@ -3,26 +3,23 @@ local IPS2DevKit = script.Parent.Parent
 local MapLinter = require(IPS2DevKit.MapLinter)
 local Types = require(IPS2DevKit.Types)
 
-type LinterFunc = ((name: string) -> { Types.LinterResult }) | (() -> { Types.LinterResult })
-
-local function handleResult(func: LinterFunc, ...: any...) -- TODO handle linter output visually
-	local results = func(...) :: { Types.LinterResult }
-	local messages = {}
+local function handleResults(results: { Types.LintResult }) -- TODO handle linter output visually
+	local parsedResults = {}
 	local pass = true
 
 	for _, result in results do
 		if not result.ok then
 			pass = false
-			table.insert(messages, result.statusMessage)
+			table.insert(parsedResults, { result.name, result.statusMessage })
 		end
 	end
 
-	local line = string.rep("-", 25)
+	local line = string.rep("-", 30)
 	local output = `\n{line}\nResult: {if pass then "PASS" else "FAIL"}\n`
-	if #messages > 0 then
+	if #parsedResults > 0 then
 		output ..= "Status messages:\n"
-		for _, message in messages do
-			output ..= "- " .. message .. "\n"
+		for _, data in parsedResults do
+			output ..= `- {data[2]} ({data[1]})\n`
 		end
 	end
 	output ..= line .. "\n"
@@ -43,7 +40,7 @@ return {
 				text = "Run",
 
 				activated = function()
-					handleResult(MapLinter.All)
+					handleResults(MapLinter.All())
 				end,
 			},
 		},
@@ -60,7 +57,9 @@ return {
 				text = "Run Global",
 
 				activated = function()
-					handleResult(MapLinter.Group, "Global")
+					handleResults(MapLinter.Group("Global"))
+				end,
+			},
 				end,
 			},
 		},

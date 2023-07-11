@@ -1,24 +1,23 @@
 local IPS2DevKit = script.Parent.Parent.Parent
 
-local Types = IPS2DevKit.Types
+local Types = require(IPS2DevKit.Types)
 
 local GROUP_NAME = "Global"
 
-return function(map: Folder): Types.LinterResult
+return function(map: Folder): { Types.LintResult }
+	local results = {}
+
 	-- No unachored BaseParts
 	for _, instance in map:GetDescendants() do
 		if instance:IsA("BasePart") and not instance.Anchored then
-			return {
+			table.insert(results, {
 				ok = false,
-				groupName = GROUP_NAME,
+				name = GROUP_NAME,
 				statusMessage = "Map contains unanchored BaseParts.",
-			}
+			})
+			break
 		end
 	end
 
-	-- Pass
-	return {
-		ok = true,
-		groupName = GROUP_NAME,
-	}
+	return results
 end
