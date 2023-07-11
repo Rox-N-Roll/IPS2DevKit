@@ -60,6 +60,12 @@ return {
 					handleResults(MapLinter.Group("Global"))
 				end,
 			},
+			{
+				class = "button",
+				text = "Run CamLocations",
+
+				activated = function()
+					handleResults(MapLinter.Group("CamLocations"))
 				end,
 			},
 		},
