@@ -19,8 +19,7 @@ local function runGroups(groupNames: { string }): { Types.LintResult }
 			name = "MapLinter",
 			statusMessage = "Unable to find map.",
 		})
-
-		return results -- Skip lint groups, map needs to exist first
+		return results
 	end
 
 	for _, groupName in groupNames do
