@@ -76,6 +76,14 @@ return {
 					handleResults(MapLinter.Group("Entrances"))
 				end,
 			},
+			{
+				class = "button",
+				text = "Run NPCSpawns",
+
+				activated = function()
+					handleResults(MapLinter.Group("NPCSpawns"))
+				end,
+			},
 		},
 	},
 }

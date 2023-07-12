@@ -1,3 +1,5 @@
+local EPSILON = 1e-5
+
 local Util = {}
 
 function Util.CreateWidget(plugin: Plugin, name: string): DockWidgetPluginGui
@@ -43,6 +45,10 @@ function Util.HasInvalidAttributes(instance: Instance, allowed: { [string]: stri
 	end
 
 	return false, nil
+end
+
+function Util.FloatEquals(n0: number, n1: number): boolean
+	return math.abs(n1 - n0) < EPSILON
 end
 
 return Util
