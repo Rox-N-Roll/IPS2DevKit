@@ -84,6 +84,14 @@ return {
 					handleResults(MapLinter.Group("NPCSpawns"))
 				end,
 			},
+			{
+				class = "button",
+				text = "Run Clipping",
+
+				activated = function()
+					handleResults(MapLinter.Group("Clipping"))
+				end,
+			},
 		},
 	},
 }
