@@ -8,7 +8,7 @@ local assets = IPS2DevKit.Assets
 
 local function insertThief(name: string)
 	local thief = assets.Thieves[name]:Clone()
-	thief:PivotTo(Util.GetSpawnLocation(15))
+	thief:PivotTo(Util.GetSpawnLocation(7))
 	thief.Parent = workspace
 
 	Selection:Set({ thief })
@@ -29,7 +29,7 @@ return {
 
 				activated = function()
 					local camera = assets.Camera:Clone()
-					camera:PivotTo(Util.GetSpawnLocation(12))
+					camera:PivotTo(Util.GetSpawnLocation(6))
 					camera.Parent = workspace
 
 					Selection:Set({ camera })

@@ -1,0 +1,13 @@
+{
+	"ClassName": "Part",
+
+	"Properties": {
+		"Size": [5, 0.05, 5],
+		"Transparency": 1,
+		"Material": "SmoothPlastic",
+		"Anchored": true,
+		"CanQuery": false,
+		"CanTouch": false,
+		"CanCollide": false
+	}
+}

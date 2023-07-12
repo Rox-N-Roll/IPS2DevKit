@@ -7,27 +7,71 @@ local IPS2DevKit = script.Parent.Parent
 local Util = require(IPS2DevKit.Util)
 local assets = IPS2DevKit.Assets
 
+local function getSpawnParent(mapFolderName: string?): Instance
+	local map = workspace:FindFirstChild("Map")
+	if map then
+		if mapFolderName then
+			local folder = map:FindFirstChild(mapFolderName)
+			if folder then
+				return folder
+			end
+		else
+			return map
+		end
+	end
+
+	return workspace
+end
+
 return {
 	{
-		id = "Kits",
+		id = "Functional",
 		displays = {
 			{
+				class = "title",
+				text = "Functional",
+			},
+			{
 				class = "button",
-				text = "Insert Camera Location Kit",
+				text = "Camera Location",
 
 				activated = function()
 					local location = Util.GetSpawnLocation(8)
 
 					local camLocation = assets.CamLocation:Clone()
 					local cutout = assets.CamLocationCutout:Clone()
+					camLocation.Name = "RENAME_ME"
 					camLocation:PivotTo(location)
 					cutout:PivotTo(location)
-					camLocation.Parent = workspace
-					cutout.Parent = workspace
+					camLocation.Parent = getSpawnParent("CamLocations")
+					cutout.Parent = getSpawnParent()
 
 					Selection:Set({ camLocation, cutout })
-					ChangeHistoryService:SetWaypoint("Insert Camera Location Kit")
+					ChangeHistoryService:SetWaypoint("Insert Camera Location")
 				end,
+			},
+			{
+				class = "button",
+				text = "NPC Spawn",
+
+				activated = function()
+					local template = assets.NPCSpawn:Clone()
+					template.Name = "Part"
+					template:PivotTo(Util.GetSpawnLocation(8))
+					template.Parent = getSpawnParent("NPCSpawns")
+
+					Selection:Set({ template })
+					ChangeHistoryService:SetWaypoint("Insert NPC Spawn")
+				end,
+			},
+		},
+	},
+	{
+		id = "Other",
+		displays = {
+			{
+				class = "title",
+				text = "Other",
 			},
 			{
 				class = "button",
@@ -44,7 +88,7 @@ return {
 			},
 			{
 				class = "button",
-				text = "Insert Map CollectionService Tags",
+				text = "Reconcile Map Tags",
 
 				activated = function()
 					local tagList = ServerStorage:FindFirstChild("TagList")
@@ -63,7 +107,7 @@ return {
 					end
 
 					if inserted then
-						ChangeHistoryService:SetWaypoint("Insert Map CollectionService Tags")
+						ChangeHistoryService:SetWaypoint("Reconcile Map Tags")
 					end
 				end,
 			},
