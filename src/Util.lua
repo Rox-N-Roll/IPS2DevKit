@@ -33,4 +33,16 @@ function Util.GetSpawnLocation(offset: number)
 	return CFrame.new(camera.CFrame.Position + camera.CFrame.LookVector * offset)
 end
 
+function Util.HasInvalidAttributes(instance: Instance, allowed: { [string]: string }): (boolean, string?)
+	for name, value in instance:GetAttributes() do
+		local found = allowed[name]
+
+		if not found or typeof(value) ~= found then
+			return true, name
+		end
+	end
+
+	return false, nil
+end
+
 return Util

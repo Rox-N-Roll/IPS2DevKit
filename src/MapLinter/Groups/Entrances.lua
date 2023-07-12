@@ -1,6 +1,7 @@
 local IPS2DevKit = script.Parent.Parent.Parent
 
 local Types = require(IPS2DevKit.Types)
+local Util = require(IPS2DevKit.Util)
 
 local allowedAttributes = {
 	Tool = "string",
@@ -50,21 +51,13 @@ return function(map: Folder): { Types.LintResultPartial }
 		end
 
 		for _, instance in { entrance, unpack(entrance:GetDescendants()) } do
-			local cancel = false
+			local isInvalid, invalidName = Util.HasInvalidAttributes(instance, allowedAttributes)
 
-			for name, value in instance:GetAttributes() do
-				local found = allowedAttributes[name]
-				if not found or typeof(value) ~= found then
-					table.insert(results, {
-						ok = false,
-						statusMessage = `Entrance "{entrance.Name}" has instance "{instance:GetFullName()}" with invalid "{name}" attribute.`,
-					})
-					cancel = true
-					break
-				end
-			end
-
-			if cancel then
+			if isInvalid then
+				table.insert(results, {
+					ok = false,
+					statusMessage = `Entrance "{entrance.Name}" has instance "{instance:GetFullName()}" with invalid "{invalidName}" attribute.`,
+				})
 				break
 			end
 		end
