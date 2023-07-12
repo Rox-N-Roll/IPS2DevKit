@@ -2,10 +2,9 @@ local IPS2DevKit = script.Parent
 
 local React = require(IPS2DevKit.Packages.React)
 local PluginContext = require(IPS2DevKit.App.Contexts.PluginContext)
-local PanelGroup = require(IPS2DevKit.App.Components.PanelGroup)
 local Padding = require(IPS2DevKit.App.Components.Padding)
 local useTheme = require(IPS2DevKit.App.Hooks.useTheme)
-local Panels = require(IPS2DevKit.Panels)
+local ContentList = require(IPS2DevKit.App.ContentList)
 
 local SCROLLBAR_SIZE = 8
 local TITLE_SIZE = 60
@@ -20,25 +19,6 @@ return function(props: {
 	versionString: string,
 })
 	local theme = useTheme()
-
-	local contents = {
-		Padding = e(Padding, {
-			right = UDim.new(0, SCROLLBAR_SIZE),
-		}),
-		Layout = e("UIListLayout", {
-			Padding = theme.padding,
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			FillDirection = Enum.FillDirection.Vertical,
-			HorizontalAlignment = Enum.HorizontalAlignment.Center,
-			VerticalAlignment = Enum.VerticalAlignment.Top,
-		}),
-	}
-
-	for order, group in Panels do
-		contents[group.id] = e(PanelGroup, {
-			groupOrder = order,
-		})
-	end
 
 	return e(PluginContext.Provider, {
 		value = props.plugin,
@@ -83,7 +63,20 @@ return function(props: {
 			ScrollingDirection = Enum.ScrollingDirection.Y,
 			AutomaticCanvasSize = Enum.AutomaticSize.Y,
 			CanvasSize = UDim2.fromScale(1, 0),
-			ScrollBarThickness = 8,
-		}, contents),
+			ScrollBarThickness = SCROLLBAR_SIZE,
+		}, {
+			Padding = e(Padding, {
+				right = UDim.new(0, SCROLLBAR_SIZE),
+			}),
+			Layout = e("UIListLayout", {
+				Padding = theme.padding,
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				FillDirection = Enum.FillDirection.Vertical,
+				HorizontalAlignment = Enum.HorizontalAlignment.Center,
+				VerticalAlignment = Enum.VerticalAlignment.Top,
+			}),
+
+			Children = e(React.Fragment, nil, e(ContentList)),
+		}),
 	})
 end
