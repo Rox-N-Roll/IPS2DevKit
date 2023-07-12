@@ -2,7 +2,7 @@
 
 A Roblox Studio plugin to assist with [In Plain Sight 2](https://www.roblox.com/games/2901172949) content development, such as maps or character submissions.
 
-The plugin can insert utility dummies, assets for map development, and has a map linter to ensure maps comply with the proper format. More features will come in the future to accelerate map development!
+The plugin can insert utility dummies, assets for map development, and has a map linter to ensure maps comply with the proper format. More features will come in the future to accelerate content development!
 
 ## Building
 
