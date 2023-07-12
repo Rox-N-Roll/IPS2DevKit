@@ -68,6 +68,14 @@ return {
 					handleResults(MapLinter.Group("CamLocations"))
 				end,
 			},
+			{
+				class = "button",
+				text = "Run Entrances",
+
+				activated = function()
+					handleResults(MapLinter.Group("Entrances"))
+				end,
+			},
 		},
 	},
 }
