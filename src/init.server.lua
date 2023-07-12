@@ -12,7 +12,7 @@ local Util = require(IPS2DevKit.Util)
 local App = require(script.App)
 
 local NAME = "IPS2DevKit"
-local VERSION = "v0.1.0"
+local VERSION = "v0.2.0"
 
 local toolbar = plugin:CreateToolbar(NAME)
 local widget = Util.CreateWidget(plugin, NAME)
