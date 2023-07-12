@@ -21,7 +21,7 @@ return function(map: Folder): { Types.LintResultPartial }
 	local player = clipping:FindFirstChild("Player")
 	if player and player:IsA("Folder") then
 		for _, instance in player:GetChildren() do
-			if not instance:IsA("Part") then
+			if not instance:IsA("BasePart") then
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found player clipping "{instance.Name}" is an invalid instance.`,
@@ -56,7 +56,7 @@ return function(map: Folder): { Types.LintResultPartial }
 	local entrance = clipping:FindFirstChild("Entrance")
 	if entrance and entrance:IsA("Folder") then
 		for _, instance in entrance:GetChildren() do
-			if not instance:IsA("Part") then
+			if not instance:IsA("BasePart") then
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found entrance clipping "{instance.Name}" is an invalid instance.`,
@@ -92,7 +92,7 @@ return function(map: Folder): { Types.LintResultPartial }
 	local mapEntrances = map:FindFirstChild("Entrances")
 	if bounds and bounds:IsA("Folder") then
 		for _, instance in bounds:GetChildren() do
-			if not instance:IsA("Part") then
+			if not instance:IsA("BasePart") then
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found bounds clipping "{instance.Name}" is an invalid instance.`,
