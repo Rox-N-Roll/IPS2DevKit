@@ -3,7 +3,7 @@ local EPSILON = 1e-5
 local Util = {}
 
 function Util.CreateWidget(plugin: Plugin, name: string): DockWidgetPluginGui
-	local info = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Left)
+	local info = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Left, false, false, 0, 0, 400, 0)
 
 	local widget = plugin:CreateDockWidgetPluginGui(name, info)
 	widget.Name = name
