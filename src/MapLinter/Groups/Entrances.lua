@@ -11,6 +11,7 @@ local allowedAttributes = {
 	Animation = "string",
 	TweenInfo = "string",
 	PlayerStartDelay = "number",
+	BagVelocityMultiplier = "number",
 }
 
 local function isInvalidPath(path: Folder): boolean
@@ -174,7 +175,7 @@ return function(map: Folder): { Types.LintResultPartial }
 	if totalSeats < 12 then
 		table.insert(results, {
 			ok = false,
-			statusMessage = "Map is lacking at least 12 valid seats.",
+			statusMessage = "Map is lacking at least 12 valid seats with corresponding node attachments.",
 		})
 	end
 
