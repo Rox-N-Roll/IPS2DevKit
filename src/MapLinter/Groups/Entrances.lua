@@ -1,3 +1,5 @@
+local CollectionService = game:GetService("CollectionService")
+
 local IPS2DevKit = script.Parent.Parent.Parent
 
 local Types = require(IPS2DevKit.Types)
@@ -63,7 +65,14 @@ return function(map: Folder): { Types.LintResultPartial }
 		end
 
 		local node = entrance:FindFirstChild("Node")
-		if not node or not node:IsA("Part") or not node.CanQuery or node.CanTouch or node.CanCollide then
+		if
+			not node
+			or not node:IsA("Part")
+			or not node.CanQuery
+			or node.CanTouch
+			or node.CanCollide
+			or not CollectionService:HasTag(node, "EntranceNode")
+		then
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Entrance "{entrance.Name}" has invalid node.`,
