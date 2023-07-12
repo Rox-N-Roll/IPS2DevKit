@@ -3,7 +3,7 @@ local IPS2DevKit = script.Parent.Parent
 local MapLinter = require(IPS2DevKit.MapLinter)
 local Types = require(IPS2DevKit.Types)
 
-local function handleResults(results: { Types.LintResult }) -- TODO handle linter output visually
+local function handleResults(category: string, results: { Types.LintResult })
 	local parsedResults = {}
 	local pass = true
 
@@ -14,8 +14,8 @@ local function handleResults(results: { Types.LintResult }) -- TODO handle linte
 		end
 	end
 
-	local line = string.rep("-", 30)
-	local output = `\n{line}\nResult: {if pass then "PASS" else "FAIL"}\n`
+	local line = string.rep("-", 35)
+	local output = `\n{line}\nLinting: {category}\nResult: {if pass then "PASS" else "FAIL"}\n`
 	if #parsedResults > 0 then
 		output ..= "Status messages:\n"
 		for _, data in parsedResults do
@@ -40,7 +40,7 @@ return {
 				text = "Run",
 
 				activated = function()
-					handleResults(MapLinter.All())
+					handleResults("All Groups", MapLinter.All())
 				end,
 			},
 		},
@@ -57,7 +57,8 @@ return {
 				text = "Global",
 
 				activated = function()
-					handleResults(MapLinter.Group("Global"))
+					local group = "Global"
+					handleResults(group, MapLinter.Group(group))
 				end,
 			},
 			{
@@ -65,7 +66,8 @@ return {
 				text = "Items",
 
 				activated = function()
-					handleResults(MapLinter.Group("Items"))
+					local group = "Items"
+					handleResults(group, MapLinter.Group(group))
 				end,
 			},
 			{
@@ -73,7 +75,8 @@ return {
 				text = "Entrances",
 
 				activated = function()
-					handleResults(MapLinter.Group("Entrances"))
+					local group = "Entrances"
+					handleResults(group, MapLinter.Group(group))
 				end,
 			},
 			{
@@ -81,7 +84,8 @@ return {
 				text = "CamLocations",
 
 				activated = function()
-					handleResults(MapLinter.Group("CamLocations"))
+					local group = "CamLocations"
+					handleResults(group, MapLinter.Group(group))
 				end,
 			},
 			{
@@ -89,7 +93,8 @@ return {
 				text = "NPCSpawns",
 
 				activated = function()
-					handleResults(MapLinter.Group("NPCSpawns"))
+					local group = "NPCSpawns"
+					handleResults(group, MapLinter.Group(group))
 				end,
 			},
 			{
@@ -97,7 +102,8 @@ return {
 				text = "Clipping",
 
 				activated = function()
-					handleResults(MapLinter.Group("Clipping"))
+					local group = "Clipping"
+					handleResults(group, MapLinter.Group(group))
 				end,
 			},
 		},
