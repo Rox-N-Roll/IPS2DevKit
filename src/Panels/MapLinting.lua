@@ -54,7 +54,7 @@ return {
 			},
 			{
 				class = "button",
-				text = "Run Global",
+				text = "Global",
 
 				activated = function()
 					handleResults(MapLinter.Group("Global"))
@@ -62,15 +62,15 @@ return {
 			},
 			{
 				class = "button",
-				text = "Run CamLocations",
+				text = "Items",
 
 				activated = function()
-					handleResults(MapLinter.Group("CamLocations"))
+					handleResults(MapLinter.Group("Items"))
 				end,
 			},
 			{
 				class = "button",
-				text = "Run Entrances",
+				text = "Entrances",
 
 				activated = function()
 					handleResults(MapLinter.Group("Entrances"))
@@ -78,7 +78,15 @@ return {
 			},
 			{
 				class = "button",
-				text = "Run NPCSpawns",
+				text = "CamLocations",
+
+				activated = function()
+					handleResults(MapLinter.Group("CamLocations"))
+				end,
+			},
+			{
+				class = "button",
+				text = "NPCSpawns",
 
 				activated = function()
 					handleResults(MapLinter.Group("NPCSpawns"))
@@ -86,7 +94,7 @@ return {
 			},
 			{
 				class = "button",
-				text = "Run Clipping",
+				text = "Clipping",
 
 				activated = function()
 					handleResults(MapLinter.Group("Clipping"))
