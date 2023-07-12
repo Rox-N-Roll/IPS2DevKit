@@ -1,4 +1,5 @@
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
+local ServerStorage = game:GetService("ServerStorage")
 local Selection = game:GetService("Selection")
 
 local IPS2DevKit = script.Parent.Parent
@@ -39,6 +40,31 @@ return {
 
 					Selection:Set({ kit })
 					ChangeHistoryService:SetWaypoint("Insert Standard Items Kit")
+				end,
+			},
+			{
+				class = "button",
+				text = "Insert Map CollectionService Tags",
+
+				activated = function()
+					local tagList = ServerStorage:FindFirstChild("TagList")
+					if not tagList then
+						tagList = Instance.new("Folder")
+						tagList.Name = "TagList"
+						tagList.Parent = ServerStorage
+					end
+
+					local inserted = false
+					for _, tag in assets.MapTags:GetChildren() do
+						if not tagList:FindFirstChild(tag.Name) then
+							tag:Clone().Parent = tagList
+							inserted = true
+						end
+					end
+
+					if inserted then
+						ChangeHistoryService:SetWaypoint("Insert Map CollectionService Tags")
+					end
 				end,
 			},
 		},

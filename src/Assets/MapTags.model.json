@@ -1,0 +1,126 @@
+{
+	"ClassName": "Folder",
+
+	"Children": [
+		{
+			"Name": "CamLocation",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": true},
+					"Color": {"Color3": [0.282353, 0.447059, 0.956863]},
+					"DrawType": {"String": "Sphere"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "camera"},
+					"Visible": {"Bool": true}
+				}
+			}
+		},
+		{
+			"Name": "CameraInteraction",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": false},
+					"Color": {"Color3": [0.960784, 0, 0.909804]},
+					"DrawType": {"String": "Box"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "lightning"},
+					"Visible": {"Bool": true}
+				}
+			}
+		},
+		{
+			"Name": "Clip_Bounds",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": false},
+					"Color": {"Color3": [1, 0.223529, 0.223529]},
+					"DrawType": {"String": "Box"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "brick_delete"},
+					"Visible": {"Bool": true}
+				}
+			}
+		},
+		{
+			"Name": "Clip_Entrance",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": false},
+					"Color": {"Color3": [0.137255, 0.733333, 1]},
+					"DrawType": {"String": "Box"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "brick_delete"},
+					"Visible": {"Bool": true}
+				}
+			}
+		},
+		{
+			"Name": "Clip_Player",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": false},
+					"Color": {"Color3": [1, 0.223529, 0.223529]},
+					"DrawType": {"String": "Box"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "brick_delete"},
+					"Visible": {"Bool": true}
+				}
+			}
+		},
+		{
+			"Name": "EntranceNode",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": true},
+					"Color": {"Color3": [1, 0.172549, 0.192157]},
+					"DrawType": {"String": "Sphere"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "flag_red"},
+					"Visible": {"Bool": true}
+				}
+			}
+		},
+		{
+			"Name": "Item",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": false},
+					"Color": {"Color3": [0.0509804, 0.8, 0.34902]},
+					"DrawType": {"String": "Box"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "bricks"},
+					"Visible": {"Bool": true}
+				}
+			}
+		},
+		{
+			"Name": "SpecialItem",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": false},
+					"Color": {"Color3": [1, 0.670588, 0]},
+					"DrawType": {"String": "Box"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "package"},
+					"Visible": {"Bool": true}
+				}
+			}
+		}
+	]
+}
