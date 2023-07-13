@@ -14,7 +14,6 @@ on:
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
@@ -24,7 +23,6 @@ jobs:
         uses: ok-nick/setup-aftman@v0.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          trust-check: false
           version: v0.2.7
 
       - name: Lint

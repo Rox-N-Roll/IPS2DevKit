@@ -9,7 +9,6 @@ on:
 
 jobs:
   website-ci:
-    name: Website CI
     runs-on: ubuntu-latest
     permissions:
       contents: write

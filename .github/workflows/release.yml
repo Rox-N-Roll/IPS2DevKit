@@ -2,16 +2,11 @@ name: Release
 
 on:
   push:
-    branches:
-      - master
-    paths-ignore:
-      - website/**
     tags:
       - v*
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,7 +18,6 @@ jobs:
         uses: ok-nick/setup-aftman@v0.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          trust-check: false
           version: v0.2.7
 
       - name: Install packages
