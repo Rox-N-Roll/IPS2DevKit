@@ -14,6 +14,7 @@ const config = {
   projectName: 'IPS2DevKit',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  trailingSlash: true,
 
   i18n: {
     defaultLocale: 'en',
