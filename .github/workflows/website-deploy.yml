@@ -12,17 +12,14 @@ jobs:
   website-deploy:
     name: Deploy website to GitHub Pages
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: website
     steps:
       - name: Checkout master
         uses: actions/checkout@v3
-
-      - name: Configure Git
-        run: |
-          git config --global user.email "example@example.com"
-          git config --global user.name "GitHub Actions Deployment"
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -37,7 +34,7 @@ jobs:
       - name: Build website
         run: npm run build
 
-      - name: Deploy website to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
