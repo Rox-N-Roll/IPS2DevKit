@@ -1,15 +1,15 @@
-name: Test website deployment
+name: Website CI
 
 on:
   pull_request:
     branches:
       - master
     paths:
-      - 'website/**'
+      - website/**
 
 jobs:
-  test-website-deploy:
-    name: Test website deployment
+  website-ci:
+    name: Website CI
     runs-on: ubuntu-latest
     permissions:
       contents: write

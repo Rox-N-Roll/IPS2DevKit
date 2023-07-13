@@ -1,16 +1,16 @@
-name: Deploy website to GitHub Pages
+name: Deploy website
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'website/**'
+      - website/**
   workflow_dispatch:
 
 jobs:
   website-deploy:
-    name: Deploy website to GitHub Pages
+    name: Deploy website
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -38,4 +38,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./website/build
+          publish_dir: website/build
