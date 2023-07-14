@@ -60,6 +60,14 @@ return function(map: Folder): { Types.LintResultPartial }
 			break
 		end
 
+		if not CollectionService:HasTag(loc, "CamLocation") then
+			table.insert(results, {
+				ok = false,
+				statusMessage = `Camera location "{i}" is missing the "CamLocation" tag.`,
+			})
+			break
+		end
+
 		local displayName = loc:GetAttribute("DisplayName")
 		if typeof(displayName) ~= "string" or string.len(displayName) <= 0 then
 			table.insert(results, {
