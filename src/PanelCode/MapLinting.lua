@@ -1,5 +1,3 @@
-local ChangeHistoryService = game:GetService("ChangeHistoryService")
-
 local IPS2DevKit = script.Parent.Parent
 
 local VisProblems = require(IPS2DevKit.VisProblems)
@@ -29,10 +27,9 @@ end
 
 local function handleResults(category: string, results: { Types.LintResult })
 	local parsedResults = {}
-	local vpCreated = false
 	local pass = true
 
-	local vpDeleted = VisProblems.Clear()
+	VisProblems.Clear()
 
 	for _, result in results do
 		if not result.ok then
@@ -52,17 +49,12 @@ local function handleResults(category: string, results: { Types.LintResult })
 						statusMessage = result.statusMessage,
 						group = result.group,
 					})
-					vpCreated = true
 				end
 			end
 
 			table.insert(parsedResults, { result.statusMessage, result.group })
 			pass = false
 		end
-	end
-
-	if vpCreated or vpDeleted then
-		ChangeHistoryService:SetWaypoint("Modify VisProblems from MapLinter")
 	end
 
 	local line = string.rep("-", 35)
