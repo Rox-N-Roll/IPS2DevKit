@@ -1,5 +1,9 @@
+local ChangeHistoryService = game:GetService("ChangeHistoryService")
+local Selection = game:GetService("Selection")
+
 local IPS2DevKit = script.Parent.Parent
 
+local VisProblems = require(IPS2DevKit.VisProblems)
 local MapLinter = require(IPS2DevKit.MapLinter)
 local Types = require(IPS2DevKit.Types)
 
@@ -7,13 +11,35 @@ local MapLinting = {}
 
 local function handleResults(category: string, results: { Types.LintResult })
 	local parsedResults = {}
+	local vpCreated = false
 	local pass = true
+
+	VisProblems.Clear()
 
 	for _, result in results do
 		if not result.ok then
-			pass = false
+			local subj = result.subject
+			if result.subject then
+				local position = if subj:IsA("Model") then subj:GetPivot() else subj.Position
+				VisProblems.Create(subj:GetFullName(), position, {
+					statusMessage = result.statusMessage,
+					group = result.name,
+				})
+				vpCreated = true
+			end
+
 			table.insert(parsedResults, { result.name, result.statusMessage })
+			pass = false
 		end
+	end
+
+	if vpCreated then
+		local vpHolder = VisProblems.GetHolder()
+		if vpHolder then
+			Selection:Set({ vpHolder })
+		end
+
+		ChangeHistoryService:SetWaypoint("Create VisProblems from MapLinter")
 	end
 
 	local line = string.rep("-", 35)
