@@ -45,7 +45,7 @@ local function handleResults(category: string, results: { Types.LintResult })
 				end
 
 				if pos then
-					VisProblems.Create(subj:GetFullName(), pos, {
+					VisProblems.Create(subj, pos, {
 						statusMessage = result.statusMessage,
 						group = result.group,
 					})
