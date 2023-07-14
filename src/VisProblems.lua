@@ -2,7 +2,7 @@ local HOLDER_NAME = "_IPS2DevKit_VisProblems"
 
 local VisProblems = {}
 
-function VisProblems.Create(name: string, info: { [string]: any })
+function VisProblems.Create(name: string, position: Vector3, info: { [string]: any })
 	local holder = workspace:FindFirstChild(HOLDER_NAME)
 	if not holder then
 		holder = Instance.new("Folder")
@@ -14,6 +14,7 @@ function VisProblems.Create(name: string, info: { [string]: any })
 	adornee.Name = name
 	adornee.Transparency = 1
 	adornee.Size = Vector3.zero
+	adornee.Position = position
 	adornee.Anchored = true
 	adornee.CanCollide = false
 	adornee.CanQuery = false
