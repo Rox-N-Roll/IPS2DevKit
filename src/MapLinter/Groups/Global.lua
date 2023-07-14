@@ -11,6 +11,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = "Map contains unanchored BaseParts.",
+				subject = instance,
 			})
 			break
 		end
