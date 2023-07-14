@@ -31,10 +31,12 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 
 	local missingItemTag = not CollectionService:HasTag(item, "Item")
 	if missingItemTag and not CollectionService:HasTag(item, "SpecialItem") then
-		return true, {
-			ok = false,
-			statusMessage = `Item "{item:GetFullName()}" is missing the "Item" tag.`,
-		}
+		return true,
+			{
+				ok = false,
+				statusMessage = `Item "{item:GetFullName()}" is missing the "Item" tag.`,
+				subject = item,
+			}
 	end
 
 	local foundValidPrimary = false
@@ -45,10 +47,12 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 		end
 	end
 	if not foundValidPrimary and not missingItemTag and not item:FindFirstChild("Actions") then
-		return true, {
-			ok = false,
-			statusMessage = `Item "{item:GetFullName()}" has no valid primary volume.`,
-		}
+		return true,
+			{
+				ok = false,
+				statusMessage = `Item "{item:GetFullName()}" has no valid primary volume.`,
+				subject = item,
+			}
 	end
 
 	local isInvalid, invalidName = Util.HasInvalidAttributes(item, allowedAttributes)
@@ -57,6 +61,7 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 			{
 				ok = false,
 				statusMessage = `Item "{item:GetFullName()}" has invalid "{invalidName}" attribute.`,
+				subject = item,
 			}
 	end
 
@@ -86,7 +91,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			end
 		elseif item:IsA("Folder") then
 			if item.Name ~= "ItemStack" then
-				table.insert(results, {
+				table.insert(results, { -- TODO allow folder subjects
 					ok = false,
 					statusMessage = `ItemStack "{item:GetFullName()}" is not named properly.`,
 				})
@@ -97,7 +102,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			for i = 1, #item:GetChildren() do
 				local childItem = getItemByOrder(item, i)
 				if not childItem then
-					table.insert(results, {
+					table.insert(results, { -- TODO allow folder subjects
 						ok = false,
 						statusMessage = `ItemStack "{item:GetFullName()}" is missing order "{i}" item.`,
 					})
