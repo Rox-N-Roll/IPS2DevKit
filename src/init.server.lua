@@ -8,6 +8,7 @@ local IPS2DevKit = script
 
 local ReactRoblox = require(IPS2DevKit.Packages.ReactRoblox)
 local React = require(IPS2DevKit.Packages.React)
+local VisProblems = require(IPS2DevKit.VisProblems)
 local Util = require(IPS2DevKit.Util)
 local App = require(script.App)
 
@@ -29,6 +30,7 @@ local widgetConn = widget:GetPropertyChangedSignal("Enabled"):Connect(function()
 	if widget.Enabled then
 		root:render(app)
 	else
+		VisProblems.Clear()
 		root:unmount()
 	end
 end)
@@ -40,5 +42,6 @@ end
 plugin.Unloading:Connect(function()
 	cleanupButton()
 	widgetConn:Disconnect()
+	VisProblems.Clear()
 	root:unmount()
 end)

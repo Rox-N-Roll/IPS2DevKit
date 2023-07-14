@@ -1,6 +1,7 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
-* Refactor app
-* Add documentation website
-* Add GitHub actions
+* Added VisProblems
+* Added documentation website
+* Added GitHub actions
+* Refactored app
