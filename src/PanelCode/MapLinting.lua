@@ -1,5 +1,4 @@
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
-local Selection = game:GetService("Selection")
 
 local IPS2DevKit = script.Parent.Parent
 
@@ -34,11 +33,6 @@ local function handleResults(category: string, results: { Types.LintResult })
 	end
 
 	if vpCreated or vpDeleted then
-		local vpHolder = VisProblems.GetHolder()
-		if vpHolder then
-			Selection:Set({ vpHolder })
-		end
-
 		ChangeHistoryService:SetWaypoint("Modify VisProblems from MapLinter")
 	end
 
