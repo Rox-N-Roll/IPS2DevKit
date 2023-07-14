@@ -22,6 +22,13 @@ local function getItemByOrder(stack: Folder, order: number): Model?
 end
 
 local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
+	if not item:IsA("Model") then
+		return true, {
+			ok = false,
+			statusMessage = `Item "{item.Name}" is an invalid instance.`,
+		}
+	end
+
 	local missingItemTag = not CollectionService:HasTag(item, "Item")
 	if missingItemTag and not CollectionService:HasTag(item, "SpecialItem") then
 		return true, {
