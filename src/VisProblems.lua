@@ -48,11 +48,15 @@ function VisProblems.Create(name: string, position: Vector3, info: { [string]: a
 	adornee.Parent = holder
 end
 
-function VisProblems.Clear()
+function VisProblems.Clear(): boolean
 	local holder = VisProblems.GetHolder()
+
 	if holder then
 		holder:Destroy()
+		return true
 	end
+
+	return false
 end
 
 return VisProblems

@@ -14,7 +14,7 @@ local function handleResults(category: string, results: { Types.LintResult })
 	local vpCreated = false
 	local pass = true
 
-	VisProblems.Clear()
+	local vpDeleted = VisProblems.Clear()
 
 	for _, result in results do
 		if not result.ok then
@@ -33,13 +33,13 @@ local function handleResults(category: string, results: { Types.LintResult })
 		end
 	end
 
-	if vpCreated then
+	if vpCreated or vpDeleted then
 		local vpHolder = VisProblems.GetHolder()
 		if vpHolder then
 			Selection:Set({ vpHolder })
 		end
 
-		ChangeHistoryService:SetWaypoint("Create VisProblems from MapLinter")
+		ChangeHistoryService:SetWaypoint("Modify VisProblems from MapLinter")
 	end
 
 	local line = string.rep("-", 35)
