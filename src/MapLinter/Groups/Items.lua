@@ -91,9 +91,10 @@ return function(map: Folder): { Types.LintResultPartial }
 			end
 		elseif item:IsA("Folder") then
 			if item.Name ~= "ItemStack" then
-				table.insert(results, { -- TODO allow folder subjects
+				table.insert(results, {
 					ok = false,
 					statusMessage = `ItemStack "{item:GetFullName()}" is not named properly.`,
+					subject = item,
 				})
 				break
 			end
@@ -102,9 +103,10 @@ return function(map: Folder): { Types.LintResultPartial }
 			for i = 1, #item:GetChildren() do
 				local childItem = getItemByOrder(item, i)
 				if not childItem then
-					table.insert(results, { -- TODO allow folder subjects
+					table.insert(results, {
 						ok = false,
 						statusMessage = `ItemStack "{item:GetFullName()}" is missing order "{i}" item.`,
+						subject = item,
 					})
 					cancel = true
 					break
