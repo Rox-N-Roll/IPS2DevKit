@@ -19,7 +19,7 @@ local function handleResults(category: string, results: { Types.LintResult })
 		if not result.ok then
 			local subj = result.subject
 			if result.subject then
-				local position = if subj:IsA("Model") then subj:GetPivot() else subj.Position
+				local position = if subj:IsA("Model") then subj:GetPivot().Position else subj.Position
 				VisProblems.Create(subj:GetFullName(), position, {
 					statusMessage = result.statusMessage,
 					group = result.name,
