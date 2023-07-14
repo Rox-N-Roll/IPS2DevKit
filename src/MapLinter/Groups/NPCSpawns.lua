@@ -38,6 +38,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Found invalid properties of "{zone.Name}" NPC zone.`,
+				subject = zone,
 			})
 			break
 		end
@@ -47,6 +48,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Found NPC zone "{zone.Name}" with invalid "{invalidName}" attribute.`,
+				subject = zone,
 			})
 			break
 		end
