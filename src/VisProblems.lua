@@ -2,8 +2,12 @@ local HOLDER_NAME = "_IPS2DevKit_VisProblems"
 
 local VisProblems = {}
 
+function VisProblems.GetHolder(): Folder?
+	return workspace:FindFirstChild(HOLDER_NAME)
+end
+
 function VisProblems.Create(name: string, position: Vector3, info: { [string]: any })
-	local holder = workspace:FindFirstChild(HOLDER_NAME)
+	local holder = VisProblems.GetHolder()
 	if not holder then
 		holder = Instance.new("Folder")
 		holder.Name = HOLDER_NAME
@@ -45,7 +49,7 @@ function VisProblems.Create(name: string, position: Vector3, info: { [string]: a
 end
 
 function VisProblems.Clear()
-	local holder = workspace:FindFirstChild(HOLDER_NAME)
+	local holder = VisProblems.GetHolder()
 	if holder then
 		holder:Destroy()
 	end
