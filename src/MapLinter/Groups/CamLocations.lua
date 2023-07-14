@@ -53,7 +53,7 @@ return function(map: Folder): { Types.LintResultPartial }
 	local template = IPS2DevKit.Assets.CamLocation
 	for i = 1, #locations do
 		local loc = camLocations:FindFirstChild(i)
-		if not loc then
+		if not loc or not loc:IsA("Part") then
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Missing "{i}" camera location. Do you have stray instances?`,
