@@ -33,6 +33,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found player clipping "{instance.Name}" has invalid properties.`,
+					subject = instance,
 				})
 				break
 			end
@@ -41,6 +42,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found player clipping "{instance.Name}" is missing the "Clip_Player" tag.`,
+					subject = instance,
 				})
 				break
 			end
@@ -68,6 +70,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found entrance clipping "{instance.Name}" has invalid properties.`,
+					subject = instance,
 				})
 				break
 			end
@@ -76,6 +79,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found entrance clipping "{instance.Name}" is missing the "Clip_Entrance" tag.`,
+					subject = instance,
 				})
 				break
 			end
@@ -104,6 +108,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found bounds clipping "{instance.Name}" has invalid properties.`,
+					subject = instance,
 				})
 				break
 			end
@@ -112,6 +117,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found bounds clipping "{instance.Name}" is missing the "Clip_Bounds" tag.`,
+					subject = instance,
 				})
 				break
 			end
@@ -122,6 +128,7 @@ return function(map: Folder): { Types.LintResultPartial }
 					table.insert(results, {
 						ok = false,
 						statusMessage = `Found bounds clipping "{instance.Name}" has invalid entrance attribute.`,
+						subject = instance,
 					})
 					break
 				end
