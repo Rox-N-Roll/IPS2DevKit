@@ -34,6 +34,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = "Stray CamLocation tag found.",
+				subject = instance,
 			})
 			break
 		end
@@ -64,6 +65,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Camera location "{i}" is missing the "CamLocation" tag.`,
+				subject = loc,
 			})
 			break
 		end
@@ -73,6 +75,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Camera location "{i}" has invalid "DisplayName" attribute.`,
+				subject = loc,
 			})
 		end
 
@@ -81,6 +84,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Camera location "{i}" has invalid "{name}" property.`,
+					subject = loc,
 				})
 			end
 		end
@@ -92,6 +96,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Camera location "{i}" has invalid children.`,
+					subject = child,
 				})
 				break
 			end
@@ -101,6 +106,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Camera location "{i}" has invalid children.`,
+					subject = child,
 				})
 				break
 			end
@@ -112,6 +118,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Camera location "{i}" has invalid children.`,
+				subject = loc,
 			})
 			break
 		end
