@@ -1,6 +1,6 @@
 export type LintResult = {
 	ok: boolean,
-	name: string,
+	group: string,
 	statusMessage: string,
 	subject: Instance?,
 }

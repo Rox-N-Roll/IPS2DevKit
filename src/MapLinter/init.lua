@@ -16,7 +16,7 @@ local function runGroups(groupNames: { string }): { Types.LintResult }
 	if not map or not map:IsA("Folder") then
 		table.insert(results, {
 			ok = false,
-			name = "MapLinter",
+			group = "MapLinter",
 			statusMessage = "Unable to find map.",
 		})
 		return results
@@ -24,7 +24,7 @@ local function runGroups(groupNames: { string }): { Types.LintResult }
 
 	for _, groupName in groupNames do
 		for _, result: Types.LintResultPartial in groups[groupName](map) do
-			result.name = groupName
+			result.group = groupName
 			table.insert(results, result :: Types.LintResult)
 		end
 	end

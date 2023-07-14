@@ -22,12 +22,12 @@ local function handleResults(category: string, results: { Types.LintResult })
 				local position = if subj:IsA("Model") then subj:GetPivot().Position else subj.Position
 				VisProblems.Create(subj:GetFullName(), position, {
 					statusMessage = result.statusMessage,
-					group = result.name,
+					group = result.group,
 				})
 				vpCreated = true
 			end
 
-			table.insert(parsedResults, { result.name, result.statusMessage })
+			table.insert(parsedResults, { result.statusMessage, result.group })
 			pass = false
 		end
 	end
@@ -41,7 +41,7 @@ local function handleResults(category: string, results: { Types.LintResult })
 	if #parsedResults > 0 then
 		output ..= "Status messages:\n"
 		for _, data in parsedResults do
-			output ..= `- {data[2]} ({data[1]})\n`
+			output ..= `- {data[1]} ({data[2]})\n`
 		end
 	end
 	output ..= line .. "\n"
