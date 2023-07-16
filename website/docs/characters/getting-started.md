@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# Getting Started
 
 ### Step #1: The Idea
 

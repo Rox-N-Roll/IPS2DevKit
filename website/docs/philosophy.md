@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # Submission Philosophy
 
+Note from Xxshmeli8xX
+
 	This is a more opinionated and disorganized section of the submission kit that talks about
 	some ideas people should be aware of when planning on submitting something.
 

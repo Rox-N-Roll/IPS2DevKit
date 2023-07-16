@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Heirarchy
+# Hierarchy
 
 This is the hierarchy of a valid and portable In Plain Sight 2 map.
 All instances will have a name of what their instance is.
