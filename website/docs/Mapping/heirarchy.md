@@ -1,0 +1,115 @@
+---
+sidebar_position: 3
+---
+
+# Heirarchy
+
+This is the hierarchy of a valid and portable In Plain Sight 2 map.
+All instances will have a name of what their instance is.
+
+- Map - Folder
+    - CamLocations - Folder
+        - CamLocations contains only BaseParts
+        - CanCollide is false, CanQuery is false, and CanTouch is true
+		- Contains all CamLocation tagged instances
+		- All instances have an attribute called DisplayName, storing a string, which displays to a camera as the name of the hatch
+	- Clipping - Folder
+		- Bounds - Folder
+        - Contains only BaseParts
+        - All instances are tagged `Clip_Bounds`
+        - All instances have an attribute called Entrance, with the name of the Entrance's folder name which it teleports you to upon touching it
+        - Instances named Broad will be disabled during the round start and round end, to allow for entering and escaping
+        - Instances not named Broad always teleport thieves
+        - CanCollide is false, CanQuery is false, and CanTouch is true
+		- Entrance - Folder
+        - Contains only BaseParts
+        - All instances are tagged `Clip_Entrance`
+        - CanCollide is true, CanQuery is true, and CanTouch is true
+        - CanCollide set to false during round intro and escape sequence, to allow for entering and escaping
+		- Player - Folder
+        - Contains only BaseParts
+        - All instances are tagged `Clip_Player`
+        - CanCollide is true, CanQuery is true, and CanTouch is true
+        - Instances that only thieves can collide with
+        - Does not prevent camera lasers or any projectile from moving through
+        - Mostly used for out of bounds protection
+	- Entrances - Folder
+		- ExitName - Folder
+		    - Actions - Folder
+		        - DriverSeat - Seat
+                - A dude is sitting in it
+		        - VanDoor - BasePart or UnionOperation
+		            - Tweened to child instance named End on round start
+		        - Door - BasePart or UnionOperation
+		            - Tweened to child instance named End on Kick animation event
+		        - Window - BasePart or UnionOperation
+		            - Tweened to child instance named End on WindowCut animation event
+		    - NPCPath - Folder
+		        - Contains Baseparts, named 1, 2, ..., n
+		        - 1 is the spawn point of the NPC
+		        - BaseParts between 2 and n is the path the NPC walks to, in order, in a straight line between
+		        - n is the final position of the NPC, where they will stand the rest of the round
+		        - BaseParts are orientation sensitive, the NPC tries to follow the CFrame of the BasePart
+		        - To do this efficiently, create a new R15 rig under the Avatar tab, with the Rig Builder button, and name them `funnyguy`
+		        - Next, select a BasePart you wish to be a node
+		        - Then, run this command: `game:GetService("Selection"):Get()[1].CFrame = game.Workspace.funnyguy.PrimaryPart.CFrame`
+		        - This takes a part you have selected and moves it to orient itself with `funnyguy`
+		        - Any NPCPath instance can have the following attributes:
+		            - Animation, string, plays an animation at a given node:
+		                - Kick
+		                    - Kick requires an instance named Door
+		                    - Will tween Door instance to CFrame of child instance End
+		                - WindowCut
+		                    - WindowCut requires an instance named Window
+		                    - Will tween Window instance to CFrame of child instance End
+		                - Sit
+		                    - Value is the name of the seat the NPC sits in
+		                    - Must be defined on the 1st NPC node
+		            - StartDelay, number, delays the time the NPC starts performing actions
+		            - Tool, string, equips the NPC with a tool in their hand, should be in first NPCPath
+		                - Blowtorch
+		                    - Required for WindowCut animation
+		    - Path - Folder
+		        - Contains only BaseParts
+		        - The path the thieves walk in at the start of the round, and in reverse when escaping
+		        - Named 1, 2, ..., n
+		        - After reaching n, thieves go to a corresponding Node Attachment instance
+		        - CanCollide, CanQuery, and CanTouch is false
+		    - Seats - Folder
+		        - Seat instances
+		        - How many people should sit in the entrance vehicle, how many players can enter through this exit
+		    - Node - BasePart
+		        - All instances tagged `EntranceNode` are BaseParts
+		        - CanCollide is false, CanTouch is false, but CanQuery is true
+		        - Node has Attachment children named 1, 2, ..., n, corresponding to n number of seats in the corresponding entrance van
+		        - When entering the map, the first thief to exit the van will end at attachment point 1, the second thief to exit the van will end at attachment point 2, and so on
+		        - Orientation doesn't matter, only position
+	- Items - Folder
+		- Contains everything stealable
+		- Item
+		    - Contains only Models
+		    - All instances are tagged with `Item`
+		    - Any Item can have the following attributes:
+		        - DisplayName, string, overrides the model name for the client's UI
+		        - CashValue, num, overrides the cash value of an item
+		    - Items are picked up by the biggest part of a volume. To disable this, add an underscore prefix to the name of the item
+		    - The position used for distance calculations for picking up items is determined by the pivot point of the item's model
+		    - There should be at least 1 BasePart as a child of the item model
+		    - Instances also tagged with `SpecialItem` have additional properties...
+		        - The direct children of the model make up the stealable item
+		        - Optional model/folder called ExtraItems, containing tagged items that spawn when the special item spawns
+		        - Optional model/folder called FallbackItems, containing tagged items that spawn when the special item DOESN'T spawn
+		        - Optional model/folder called MapModel, parents the children of this to the map if the special item check succeeds
+		        - Optional model/folder called FallbackMapModel, parents the children of this to the map if the special item check fails
+		- ItemStack - Folder
+		    - Contains tagged item instances, each with an attribute called Order, starting at 1, indicating the order they're picked up
+		    - There can be any number of duplicate ItemStack folders
+	- Lighting - Folder - *OPTIONAL*
+	- NPCSpawns - Folder
+		- Contains only BaseParts
+		- CanCollide is false, CanTouch is false, and CanQuery is false
+		- The part 0.05 studs thick and must be placed on top of the ground, and is able to be rotated
+		- Contains BaseParts that represent spawn boundaries of NPCs
+		- Any child instance of NPCSpawns can have the following attribute...
+		    - RateMultiplier, number
+		        - Multiplies the total number of NPCs by this
