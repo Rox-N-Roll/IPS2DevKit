@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Tags
+# Map Tags
 
 This is an explanation of all tags that can be applied with CollectionService or the Tag Editor.
 
