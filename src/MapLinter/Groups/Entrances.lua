@@ -5,18 +5,6 @@ local IPS2DevKit = script.Parent.Parent.Parent
 local Types = require(IPS2DevKit.Types)
 local Util = require(IPS2DevKit.Util)
 
-local allowedAttributes = {
-	Tool = "string",
-	StartDelay = "number",
-	VanDoorDelay = "number",
-	DisableSound = "boolean",
-	Sit = "string",
-	Animation = "string",
-	TweenInfo = "string",
-	PlayerStartDelay = "number",
-	BagVelocityMultiplier = "number",
-}
-
 local function isInvalidPath(path: Folder): (boolean, Instance?)
 	for i = 1, #path:GetChildren() do
 		local node = path:FindFirstChild(i)
@@ -53,7 +41,7 @@ return function(map: Folder): { Types.LintResultPartial }
 		end
 
 		for _, instance in { entrance, unpack(entrance:GetDescendants()) } do
-			local isInvalid, invalidName = Util.HasInvalidAttributes(instance, allowedAttributes)
+			local isInvalid, invalidName = Util.HasInvalidAttributes(instance, Util.GetAllowedEntranceAttributes())
 
 			if isInvalid then
 				local res = {

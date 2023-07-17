@@ -1,43 +1,17 @@
 local IPS2DevKit = script.Parent.Parent
 
 local React = require(IPS2DevKit.Packages.React)
-local Button = require(IPS2DevKit.App.Components.Button)
-local Title = require(IPS2DevKit.App.Components.Title)
 local PanelGroup = require(IPS2DevKit.App.Components.PanelGroup)
 local Panel = require(IPS2DevKit.App.Components.Panel)
 local Dummies = require(IPS2DevKit.PanelCode.Dummies)
 local MapLinting = require(IPS2DevKit.PanelCode.MapLinting)
 local MapMakingAssets = require(IPS2DevKit.PanelCode.MapMakingAssets)
+local MapEntrances = require(IPS2DevKit.PanelCode.MapEntrances)
+local EntranceAttributes = require(IPS2DevKit.App.EntranceAttributes)
+local PanelComps = require(IPS2DevKit.App.PanelComps)
 local createNextOrder = require(IPS2DevKit.App.Util.createNextOrder)
 
-local DISPLAY_SIZE = 50
-
 local e = React.createElement
-
-local function PanelTitle(props: {
-	text: string,
-	layoutOrder: number,
-})
-	local size = math.floor(DISPLAY_SIZE * 0.5)
-	return e(Title, {
-		text = props.text,
-		size = UDim2.new(1, 0, 0, size),
-		layoutOrder = props.layoutOrder,
-	})
-end
-
-local function PanelButton(props: {
-	text: string,
-	layoutOrder: number,
-	activated: () -> (),
-})
-	return e(Button, {
-		text = props.text,
-		size = UDim2.new(1, 0, 0, DISPLAY_SIZE),
-		layoutOrder = props.layoutOrder,
-		activated = props.activated,
-	})
-end
 
 return function()
 	local nextOrder = createNextOrder()
@@ -50,11 +24,11 @@ return function()
 			Cameras = e(Panel, {
 				layoutOrder = nextOrder(),
 			}, {
-				Title = e(PanelTitle, {
+				Title = e(PanelComps.Title, {
 					text = "Cameras",
 					layoutOrder = nextOrder(),
 				}),
-				Basic = e(PanelButton, {
+				Basic = e(PanelComps.Button, {
 					text = "Basic",
 					layoutOrder = nextOrder(),
 					activated = Dummies.InsertCamera,
@@ -64,39 +38,39 @@ return function()
 			Thieves = e(Panel, {
 				layoutOrder = nextOrder(),
 			}, {
-				Title = e(PanelTitle, {
+				Title = e(PanelComps.Title, {
 					text = "Thieves",
 					layoutOrder = nextOrder(),
 				}),
-				MrBlack = e(PanelButton, {
+				MrBlack = e(PanelComps.Button, {
 					text = "Mr. Black",
 					layoutOrder = nextOrder(),
 					activated = function()
 						Dummies.InsertThief("Mr. Black")
 					end,
 				}),
-				MrWhite = e(PanelButton, {
+				MrWhite = e(PanelComps.Button, {
 					text = "Mr. White",
 					layoutOrder = nextOrder(),
 					activated = function()
 						Dummies.InsertThief("Mr. White")
 					end,
 				}),
-				Brownie = e(PanelButton, {
+				Brownie = e(PanelComps.Button, {
 					text = "Brownie",
 					layoutOrder = nextOrder(),
 					activated = function()
 						Dummies.InsertThief("Brownie")
 					end,
 				}),
-				MsPurple = e(PanelButton, {
+				MsPurple = e(PanelComps.Button, {
 					text = "Ms. Purple",
 					layoutOrder = nextOrder(),
 					activated = function()
 						Dummies.InsertThief("Ms. Purple")
 					end,
 				}),
-				Pinky = e(PanelButton, {
+				Pinky = e(PanelComps.Button, {
 					text = "Pinky",
 					layoutOrder = nextOrder(),
 					activated = function()
@@ -113,16 +87,16 @@ return function()
 			Functional = e(Panel, {
 				layoutOrder = nextOrder(),
 			}, {
-				Title = e(PanelTitle, {
+				Title = e(PanelComps.Title, {
 					text = "Functional",
 					layoutOrder = nextOrder(),
 				}),
-				CameraLocation = e(PanelButton, {
+				CameraLocation = e(PanelComps.Button, {
 					text = "Camera Location",
 					layoutOrder = nextOrder(),
 					activated = MapMakingAssets.CameraLocation,
 				}),
-				NPCSpawn = e(PanelButton, {
+				NPCSpawn = e(PanelComps.Button, {
 					text = "NPC Spawn",
 					layoutOrder = nextOrder(),
 					activated = MapMakingAssets.NPCSpawn,
@@ -132,16 +106,16 @@ return function()
 			Other = e(Panel, {
 				layoutOrder = nextOrder(),
 			}, {
-				Title = e(PanelTitle, {
+				Title = e(PanelComps.Title, {
 					text = "Other",
 					layoutOrder = nextOrder(),
 				}),
-				StandardItemsKit = e(PanelButton, {
+				StandardItemsKit = e(PanelComps.Button, {
 					text = "Insert Standard Items Kit",
 					layoutOrder = nextOrder(),
 					activated = MapMakingAssets.StandardItemsKit,
 				}),
-				ReconcileMapTags = e(PanelButton, {
+				ReconcileMapTags = e(PanelComps.Button, {
 					text = "Reconcile Map Tags",
 					layoutOrder = nextOrder(),
 					activated = MapMakingAssets.ReconcileMapTags,
@@ -156,11 +130,11 @@ return function()
 			AllGroups = e(Panel, {
 				layoutOrder = nextOrder(),
 			}, {
-				Title = e(PanelTitle, {
+				Title = e(PanelComps.Title, {
 					text = "All Groups",
 					layoutOrder = nextOrder(),
 				}),
-				Run = e(PanelButton, {
+				Run = e(PanelComps.Button, {
 					text = "Run",
 					layoutOrder = nextOrder(),
 					activated = MapLinting.StartAll,
@@ -170,52 +144,92 @@ return function()
 			SpecificGroups = e(Panel, {
 				layoutOrder = nextOrder(),
 			}, {
-				Title = e(PanelTitle, {
+				Title = e(PanelComps.Title, {
 					text = "Specific Groups",
 					layoutOrder = nextOrder(),
 				}),
-				Global = e(PanelButton, {
+				Global = e(PanelComps.Button, {
 					text = "Global",
 					layoutOrder = nextOrder(),
 					activated = function()
 						MapLinting.Start("Global")
 					end,
 				}),
-				Items = e(PanelButton, {
+				Items = e(PanelComps.Button, {
 					text = "Items",
 					layoutOrder = nextOrder(),
 					activated = function()
 						MapLinting.Start("Items")
 					end,
 				}),
-				Entrances = e(PanelButton, {
+				Entrances = e(PanelComps.Button, {
 					text = "Entrances",
 					layoutOrder = nextOrder(),
 					activated = function()
 						MapLinting.Start("Entrances")
 					end,
 				}),
-				CamLocations = e(PanelButton, {
+				CamLocations = e(PanelComps.Button, {
 					text = "CamLocations",
 					layoutOrder = nextOrder(),
 					activated = function()
 						MapLinting.Start("CamLocations")
 					end,
 				}),
-				NPCSpawns = e(PanelButton, {
+				NPCSpawns = e(PanelComps.Button, {
 					text = "NPCSpawns",
 					layoutOrder = nextOrder(),
 					activated = function()
 						MapLinting.Start("NPCSpawns")
 					end,
 				}),
-				Clipping = e(PanelButton, {
+				Clipping = e(PanelComps.Button, {
 					text = "Clipping",
 					layoutOrder = nextOrder(),
 					activated = function()
 						MapLinting.Start("Clipping")
 					end,
 				}),
+			}),
+		}),
+
+		MapEntrances = e(PanelGroup, {
+			name = "Map Entrances",
+			layoutOrder = nextOrder(),
+		}, {
+			Nodes = e(Panel, {
+				layoutOrder = nextOrder(),
+			}, {
+				Title = e(PanelComps.Title, {
+					text = "Nodes",
+					layoutOrder = nextOrder(),
+				}),
+				CreateNodeAtNPC = e(PanelComps.Button, {
+					text = "Create Node at Selected NPC",
+					layoutOrder = nextOrder(),
+					activated = MapEntrances.CreateNodeAtNPC,
+				}),
+				CreateNPCAtNode = e(PanelComps.Button, {
+					text = "Create NPC at Selected Node",
+					layoutOrder = nextOrder(),
+					activated = MapEntrances.CreateNPCAtNode,
+				}),
+			}),
+
+			Attributes = e(Panel, {
+				layoutOrder = nextOrder(),
+			}, {
+				Title = e(PanelComps.Title, {
+					text = "Attributes",
+					layoutOrder = nextOrder(),
+				}),
+				Children = e(
+					React.Fragment,
+					nil,
+					e(EntranceAttributes, {
+						nextOrder = nextOrder,
+					})
+				),
 			}),
 		}),
 	}

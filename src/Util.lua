@@ -1,5 +1,17 @@
 local EPSILON = 1e-5
 
+local allowedEntranceAttributes = {
+	Tool = "string",
+	StartDelay = "number",
+	VanDoorDelay = "number",
+	DisableSound = "boolean",
+	Sit = "string",
+	Animation = "string",
+	TweenInfo = "string",
+	PlayerStartDelay = "number",
+	BagVelocityMultiplier = "number",
+}
+
 local Util = {}
 
 function Util.CreateWidget(plugin: Plugin, name: string): DockWidgetPluginGui
@@ -49,6 +61,10 @@ end
 
 function Util.FloatEquals(n0: number, n1: number): boolean
 	return math.abs(n1 - n0) < EPSILON
+end
+
+function Util.GetAllowedEntranceAttributes(): { [string]: string }
+	return allowedEntranceAttributes
 end
 
 return Util
