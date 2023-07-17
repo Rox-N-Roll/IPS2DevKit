@@ -1,7 +1,8 @@
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
-local Selection = game:GetService("Selection")
 
 local IPS2DevKit = script.Parent.Parent
+
+local Util = require(IPS2DevKit.Util)
 
 local RNG = Random.new()
 
@@ -9,13 +10,8 @@ local assets = IPS2DevKit.Assets
 
 local MapEntrances = {}
 
-local function getSelected(): Instance?
-	local instances = Selection:Get()
-	return if #instances > 0 then instances[1] else nil
-end
-
 function MapEntrances.CreatePathNodeAtNPC()
-	local npc = getSelected()
+	local npc = Util.GetSelected()
 	if not npc then
 		warn("Nothing selected!")
 		return
@@ -36,7 +32,7 @@ function MapEntrances.CreatePathNodeAtNPC()
 end
 
 function MapEntrances.CreateNPCAtPathNode()
-	local node = getSelected()
+	local node = Util.GetSelected()
 	if not node then
 		warn("Nothing selected!")
 		return
@@ -55,7 +51,7 @@ function MapEntrances.CreateNPCAtPathNode()
 end
 
 function MapEntrances.AddAttribute(name: string, attributeType: string)
-	local instance = getSelected()
+	local instance = Util.GetSelected()
 	if not instance then
 		warn("Nothing selected!")
 		return

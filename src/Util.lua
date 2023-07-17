@@ -1,3 +1,5 @@
+local Selection = game:GetService("Selection")
+
 local EPSILON = 1e-5
 
 local allowedEntranceAttributes = {
@@ -65,6 +67,11 @@ end
 
 function Util.GetAllowedEntranceAttributes(): { [string]: string }
 	return allowedEntranceAttributes
+end
+
+function Util.GetSelected(): Instance?
+	local instances = Selection:Get()
+	return if #instances > 0 then instances[1] else nil
 end
 
 return Util

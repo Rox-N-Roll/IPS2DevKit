@@ -11,7 +11,7 @@ local Dummies = {}
 function Dummies.InsertCamera()
 	local camera = assets.Camera:Clone()
 	camera:PivotTo(Util.GetSpawnLocation(6))
-	camera.Parent = workspace
+	camera.Parent = Util.GetSelected() or workspace
 
 	Selection:Set({ camera })
 	ChangeHistoryService:SetWaypoint("Insert Camera")
@@ -20,7 +20,7 @@ end
 function Dummies.InsertThief(name: string)
 	local thief = assets.Thieves[name]:Clone()
 	thief:PivotTo(Util.GetSpawnLocation(7))
-	thief.Parent = workspace
+	thief.Parent = Util.GetSelected() or workspace
 
 	Selection:Set({ thief })
 	ChangeHistoryService:SetWaypoint("Insert Thief")
