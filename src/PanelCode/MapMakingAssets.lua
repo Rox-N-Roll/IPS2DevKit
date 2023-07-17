@@ -28,12 +28,15 @@ local MapMakingAssets = {}
 function MapMakingAssets.CameraLocation()
 	local location = Util.GetSpawnLocation(8)
 
+	local camLocations = getSpawnParent("CamLocations")
+	local name = if camLocations.Name == "CamLocations" then #camLocations:GetChildren() + 1 else "RENAME_ME"
+
 	local camLocation = assets.CamLocation:Clone()
 	local cutout = assets.CamLocationCutout:Clone()
-	camLocation.Name = "RENAME_ME"
+	camLocation.Name = name
 	camLocation:PivotTo(location)
 	cutout:PivotTo(location)
-	camLocation.Parent = getSpawnParent("CamLocations")
+	camLocation.Parent = camLocations
 	cutout.Parent = getSpawnParent()
 
 	Selection:Set({ camLocation, cutout })
