@@ -201,18 +201,18 @@ return function()
 				layoutOrder = nextOrder(),
 			}, {
 				Title = e(PanelComps.Title, {
-					text = "Nodes",
+					text = "Path Nodes",
 					layoutOrder = nextOrder(),
 				}),
 				CreateNodeAtNPC = e(PanelComps.Button, {
-					text = "Create Node at Selected NPC",
+					text = "Create Path Node at Selected NPC",
 					layoutOrder = nextOrder(),
-					activated = MapEntrances.CreateNodeAtNPC,
+					activated = MapEntrances.CreatePathNodeAtNPC,
 				}),
 				CreateNPCAtNode = e(PanelComps.Button, {
-					text = "Create NPC at Selected Node",
+					text = "Create NPC at Selected Path Node",
 					layoutOrder = nextOrder(),
-					activated = MapEntrances.CreateNPCAtNode,
+					activated = MapEntrances.CreateNPCAtPathNode,
 				}),
 			}),
 
@@ -220,7 +220,7 @@ return function()
 				layoutOrder = nextOrder(),
 			}, {
 				Title = e(PanelComps.Title, {
-					text = "Attributes",
+					text = "Add Attributes",
 					layoutOrder = nextOrder(),
 				}),
 				Children = e(

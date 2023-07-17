@@ -17,7 +17,7 @@ return function(props: {
 			text = name,
 			layoutOrder = props.nextOrder(),
 			activated = function()
-				MapEntrances.Attribute(name, attributeType)
+				MapEntrances.AddAttribute(name, attributeType)
 			end,
 		})
 	end
