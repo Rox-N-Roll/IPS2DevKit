@@ -2,6 +2,15 @@
 
 ## Unreleased Changes
 
+## [v0.5.0] - July 17, 2023
+* Added a "Map Entrances" section for utility relating to entrances
+* Inserted camera locations are now automatically named, if the folders exist
+* Dummies now parented to the selected object otherwise workspace
+* Added lints for the SpecialItem, Case, and ButtonInteration items
+* The map linter now allows items of the same order
+
+[v0.5.0]: https://github.com/Crystalflxme/IPS2DevKit/releases/tag/v0.5.0
+
 ## [v0.4.0] - July 13, 2023
 * Added VisProblems
 * Added documentation website
