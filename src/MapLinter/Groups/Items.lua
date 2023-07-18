@@ -21,8 +21,12 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 		}
 	end
 
+	local isCaseItem = item.Name == "Case"
+	local isButtonInteractionItem = item.Name == "ButtonInteraction"
+	local isSpecialItem = CollectionService:HasTag(item, "SpecialItem")
 	local missingItemTag = not CollectionService:HasTag(item, "Item")
-	if missingItemTag and not CollectionService:HasTag(item, "SpecialItem") then
+
+	if missingItemTag and not isSpecialItem then
 		return true,
 			{
 				ok = false,
@@ -41,7 +45,7 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 			}
 	end
 
-	if item.Name == "Case" then
+	if isCaseItem then
 		local axis = item:FindFirstChild("Axis")
 		if not axis or not axis:IsA("BasePart") then
 			return true,
@@ -78,7 +82,7 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 				return true, res
 			end
 		end
-	elseif item.Name == "ButtonInteraction" then
+	elseif isButtonInteractionItem then
 		local actions = item:FindFirstChild("Actions")
 		if not actions or not actions:IsA("Folder") then
 			return true,
@@ -126,13 +130,39 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 				break
 			end
 		end
-		if not foundValidPrimary and not missingItemTag and not item:FindFirstChild("Actions") then
+
+		if not foundValidPrimary and not missingItemTag and not isButtonInteractionItem then
 			return true,
 				{
 					ok = false,
 					statusMessage = `Item "{item:GetFullName()}" has no valid primary volume.`,
 					subject = item,
 				}
+		end
+	end
+
+	if isSpecialItem then
+		local childItems = {}
+
+		local fallbackItems = item:FindFirstChild("FallbackItems")
+		if fallbackItems then
+			for _, childItem in fallbackItems:GetChildren() do
+				table.insert(childItems, childItem)
+			end
+		end
+
+		local extraItems = item:FindFirstChild("ExtraItems")
+		if extraItems then
+			for _, childItem in extraItems:GetChildren() do
+				table.insert(childItems, childItem)
+			end
+		end
+
+		for _, childItem in childItems do
+			local isInvalidChild, res = ItemEval.IsInvalidItemResolvable(childItem)
+			if isInvalidChild then
+				return true, res
+			end
 		end
 	end
 
