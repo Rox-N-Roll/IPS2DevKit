@@ -11,16 +11,6 @@ local allowedAttributes = {
 	Order = "number",
 }
 
-local function getItemByOrder(stack: Folder, order: number): Model?
-	for _, item in stack:GetChildren() do
-		if item:GetAttribute("Order") == order then
-			return item
-		end
-	end
-
-	return nil
-end
-
 local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 	if not item:IsA("Model") then
 		return true, {
@@ -99,29 +89,22 @@ return function(map: Folder): { Types.LintResultPartial }
 				break
 			end
 
-			local cancel = false
-			for i = 1, #item:GetChildren() do
-				local childItem = getItemByOrder(item, i)
-				if not childItem then
+			for _, childItem in item:GetChildren() do
+				local order = childItem:GetAttribute("Order")
+				if typeof(order) ~= "number" then
 					table.insert(results, {
 						ok = false,
-						statusMessage = `ItemStack "{item:GetFullName()}" is missing order "{i}" item.`,
+						statusMessage = `Item "{childItem:GetFullName()}" is missing the numerical "Order" attribute.`,
 						subject = item,
 					})
-					cancel = true
 					break
 				end
 
 				local isInvalid, res = isInvalidItem(childItem)
 				if isInvalid then
 					table.insert(results, res)
-					cancel = true
 					break
 				end
-			end
-
-			if cancel then
-				break
 			end
 		else
 			table.insert(results, {
