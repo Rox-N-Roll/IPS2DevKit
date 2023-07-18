@@ -11,7 +11,9 @@ local allowedAttributes = {
 	Order = "number",
 }
 
-local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
+local ItemEval = {}
+
+function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 	if not item:IsA("Model") then
 		return true, {
 			ok = false,
@@ -29,22 +31,6 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 			}
 	end
 
-	local foundValidPrimary = false
-	for _, instance in item:GetChildren() do
-		if instance:IsA("BasePart") and string.sub(instance.Name, 1, 1) ~= "_" then
-			foundValidPrimary = true
-			break
-		end
-	end
-	if not foundValidPrimary and not missingItemTag and not item:FindFirstChild("Actions") then
-		return true,
-			{
-				ok = false,
-				statusMessage = `Item "{item:GetFullName()}" has no valid primary volume.`,
-				subject = item,
-			}
-	end
-
 	local isInvalid, invalidName = Util.HasInvalidAttributes(item, allowedAttributes)
 	if isInvalid then
 		return true,
@@ -53,6 +39,143 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 				statusMessage = `Item "{item:GetFullName()}" has invalid "{invalidName}" attribute.`,
 				subject = item,
 			}
+	end
+
+	if item.Name == "Case" then
+		local axis = item:FindFirstChild("Axis")
+		if not axis or not axis:IsA("BasePart") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item/Case "{item:GetFullName()}" has an invalid axis.`,
+					subject = item,
+				}
+		end
+
+		local goal = axis:FindFirstChild("Goal")
+		if not goal or not goal:IsA("BasePart") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item/Case "{item:GetFullName()}" has an invalid goal.`,
+					subject = item,
+				}
+		end
+
+		local caseItems = item:FindFirstChild("CaseItems")
+		if not caseItems or not caseItems:IsA("Folder") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item/Case "{item:GetFullName()}" has invalid an case items folder.`,
+					subject = item,
+				}
+		end
+
+		for _, childItem in caseItems:GetChildren() do
+			local isInvalidChild, res = ItemEval.IsInvalidItemResolvable(childItem)
+			if isInvalidChild then
+				return true, res
+			end
+		end
+	elseif item.Name == "ButtonInteraction" then
+		local actions = item:FindFirstChild("Actions")
+		if not actions or not actions:IsA("Folder") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid actions folder.`,
+					subject = item,
+				}
+		end
+
+		local doorOrigin = actions:FindFirstChild("DoorOrigin")
+		if not doorOrigin or not doorOrigin:IsA("BasePart") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid origin.`,
+					subject = item,
+				}
+		end
+
+		local doorTarget = actions:FindFirstChild("DoorTarget")
+		if not doorTarget or not doorTarget:IsA("BasePart") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid target.`,
+					subject = item,
+				}
+		end
+
+		local door = actions:FindFirstChild("Door")
+		if not door or not door:IsA("Model") or not door.PrimaryPart then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid door.`,
+					subject = item,
+				}
+		end
+	else
+		local foundValidPrimary = false
+		for _, instance in item:GetChildren() do
+			if instance:IsA("BasePart") and string.sub(instance.Name, 1, 1) ~= "_" then
+				foundValidPrimary = true
+				break
+			end
+		end
+		if not foundValidPrimary and not missingItemTag and not item:FindFirstChild("Actions") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Item "{item:GetFullName()}" has no valid primary volume.`,
+					subject = item,
+				}
+		end
+	end
+
+	return false, nil
+end
+
+function ItemEval.IsInvalidItemResolvable(item: Instance): (boolean, Types.LintResultPartial?)
+	if item:IsA("Model") then
+		local isInvalid, res = ItemEval.IsInvalidItem(item)
+		if isInvalid then
+			return true, res
+		end
+	elseif item:IsA("Folder") then
+		if item.Name ~= "ItemStack" then
+			return true,
+				{
+					ok = false,
+					statusMessage = `ItemStack "{item:GetFullName()}" is not named properly.`,
+					subject = item,
+				}
+		end
+
+		for _, childItem in item:GetChildren() do
+			local order = childItem:GetAttribute("Order")
+			if typeof(order) ~= "number" then
+				return true,
+					{
+						ok = false,
+						statusMessage = `Item "{childItem:GetFullName()}" is missing the numerical "Order" attribute.`,
+						subject = item,
+					}
+			end
+
+			local isInvalid, res = ItemEval.IsInvalidItem(childItem)
+			if isInvalid then
+				return true, res
+			end
+		end
+	else
+		return true, {
+			ok = false,
+			statusMessage = `Item "{item.Name}" is an invalid instance.`,
+		}
 	end
 
 	return false, nil
@@ -73,44 +196,9 @@ return function(map: Folder): { Types.LintResultPartial }
 
 	-- Ensure items are valid
 	for _, item in items:GetChildren() do
-		if item:IsA("Model") then
-			local isInvalid, res = isInvalidItem(item)
-			if isInvalid then
-				table.insert(results, res)
-				break
-			end
-		elseif item:IsA("Folder") then
-			if item.Name ~= "ItemStack" then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `ItemStack "{item:GetFullName()}" is not named properly.`,
-					subject = item,
-				})
-				break
-			end
-
-			for _, childItem in item:GetChildren() do
-				local order = childItem:GetAttribute("Order")
-				if typeof(order) ~= "number" then
-					table.insert(results, {
-						ok = false,
-						statusMessage = `Item "{childItem:GetFullName()}" is missing the numerical "Order" attribute.`,
-						subject = item,
-					})
-					break
-				end
-
-				local isInvalid, res = isInvalidItem(childItem)
-				if isInvalid then
-					table.insert(results, res)
-					break
-				end
-			end
-		else
-			table.insert(results, {
-				ok = false,
-				statusMessage = `Item "{item.Name}" is an invalid instance.`,
-			})
+		local isInvalid, res = ItemEval.IsInvalidItemResolvable(item)
+		if isInvalid then
+			table.insert(results, res)
 			break
 		end
 	end
