@@ -72,7 +72,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				statusMessage = `Entrance "{entrance.Name}" has invalid node.`,
 			}
 
-			if node:IsA("BasePart") then
+			if node and node:IsA("BasePart") then
 				res.subject = node
 			end
 
