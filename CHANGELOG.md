@@ -1,6 +1,8 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+* Added a lint to prevent scripts in maps
+* Fixed entrance linting throwing an error if a node wasn't found
 
 ## [v0.5.0] - July 17, 2023
 * Added a "Map Entrances" section for utility relating to entrances
