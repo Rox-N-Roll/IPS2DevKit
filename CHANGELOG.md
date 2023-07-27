@@ -2,6 +2,7 @@
 
 ## Unreleased Changes
 * Added a lint to prevent scripts in maps
+* Changed the color of Clip_Player to differ from Clip_Bounds
 * Fixed entrance linting throwing an error if a node wasn't found
 
 ## [v0.5.0] - July 17, 2023
