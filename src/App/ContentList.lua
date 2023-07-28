@@ -124,8 +124,8 @@ return function()
 			}),
 		}),
 
-		MapLinting = e(PanelGroup, {
-			name = "Map Linting",
+		Linting = e(PanelGroup, {
+			name = "Linting",
 			layoutOrder = nextOrder(),
 		}, {
 			AllGroups = e(Panel, {
@@ -194,8 +194,8 @@ return function()
 			}),
 		}),
 
-		MapEntrances = e(PanelGroup, {
-			name = "Map Entrances",
+		Entrances = e(PanelGroup, {
+			name = "Entrances",
 			layoutOrder = nextOrder(),
 		}, {
 			Nodes = e(Panel, {
@@ -235,8 +235,8 @@ return function()
 			}),
 		}),
 
-		MapItems = e(PanelGroup, {
-			name = "Map Items",
+		Items = e(PanelGroup, {
+			name = "Items",
 			layoutOrder = nextOrder(),
 		}, {
 			Attributes = e(Panel, {
@@ -262,8 +262,8 @@ return function()
 			}),
 		}),
 
-		MapNPCSpawns = e(PanelGroup, {
-			name = "Map NPCSpawns",
+		NPCSpawns = e(PanelGroup, {
+			name = "NPCSpawns",
 			layoutOrder = nextOrder(),
 		}, {
 			Attributes = e(Panel, {
@@ -288,8 +288,8 @@ return function()
 			}),
 		}),
 
-		MapClipping = e(PanelGroup, {
-			name = "Map Clipping",
+		Clipping = e(PanelGroup, {
+			name = "Clipping",
 			layoutOrder = nextOrder(),
 		}, {
 			Attributes = e(Panel, {
