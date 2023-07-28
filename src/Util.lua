@@ -1,3 +1,4 @@
+local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local Selection = game:GetService("Selection")
 
 local EPSILON = 1e-5
@@ -72,6 +73,34 @@ end
 function Util.GetSelected(): Instance?
 	local instances = Selection:Get()
 	return if #instances > 0 then instances[1] else nil
+end
+
+function Util.AddAttribute(name: string, attributeType: string)
+	local added = false
+
+	for _, instance in Selection:Get() do
+		if instance:GetAttribute(name) ~= nil then
+			continue
+		end
+
+		local defaultValue
+		if attributeType == "string" then
+			defaultValue = ""
+		elseif attributeType == "number" then
+			defaultValue = 0
+		elseif attributeType == "boolean" then
+			defaultValue = true
+		else
+			error("unsupported attribute type")
+		end
+
+		instance:SetAttribute(name, defaultValue)
+		added = true
+	end
+
+	if added then
+		ChangeHistoryService:SetWaypoint(`Add {name} Attribute`)
+	end
 end
 
 return Util

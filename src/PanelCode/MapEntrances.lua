@@ -73,31 +73,4 @@ function MapEntrances.CreateNPCAtPathNode()
 	ChangeHistoryService:SetWaypoint("Create NPC at Path Node")
 end
 
-function MapEntrances.AddAttribute(name: string, attributeType: string)
-	local instance = Util.GetSelected()
-	if not instance then
-		warn("Nothing selected!")
-		return
-	end
-
-	if instance:GetAttribute(name) ~= nil then
-		warn("Attribute already exists!")
-		return
-	end
-
-	local defaultValue
-	if attributeType == "string" then
-		defaultValue = ""
-	elseif attributeType == "number" then
-		defaultValue = 0
-	elseif attributeType == "boolean" then
-		defaultValue = true
-	else
-		error("unsupported attribute type")
-	end
-
-	instance:SetAttribute(name, defaultValue)
-	ChangeHistoryService:SetWaypoint(`Add {name} Attribute`)
-end
-
 return MapEntrances

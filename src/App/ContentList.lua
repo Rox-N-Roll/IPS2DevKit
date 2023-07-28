@@ -7,9 +7,10 @@ local Dummies = require(IPS2DevKit.PanelCode.Dummies)
 local MapLinting = require(IPS2DevKit.PanelCode.MapLinting)
 local MapMakingAssets = require(IPS2DevKit.PanelCode.MapMakingAssets)
 local MapEntrances = require(IPS2DevKit.PanelCode.MapEntrances)
-local EntranceAttributes = require(IPS2DevKit.App.EntranceAttributes)
+local AttributeList = require(IPS2DevKit.App.AttributeList)
 local PanelComps = require(IPS2DevKit.App.PanelComps)
 local createNextOrder = require(IPS2DevKit.App.Util.createNextOrder)
+local Util = require(IPS2DevKit.Util)
 
 local e = React.createElement
 
@@ -226,7 +227,85 @@ return function()
 				Children = e(
 					React.Fragment,
 					nil,
-					e(EntranceAttributes, {
+					e(AttributeList, {
+						attributes = Util.GetAllowedEntranceAttributes(),
+						nextOrder = nextOrder,
+					})
+				),
+			}),
+		}),
+
+		MapItems = e(PanelGroup, {
+			name = "Map Items",
+			layoutOrder = nextOrder(),
+		}, {
+			Attributes = e(Panel, {
+				layoutOrder = nextOrder(),
+			}, {
+				Title = e(PanelComps.Title, {
+					text = "Add Attributes",
+					layoutOrder = nextOrder(),
+				}),
+				Children = e(
+					React.Fragment,
+					nil,
+					e(AttributeList, {
+						attributes = {
+							DisplayName = "string",
+							Order = "number",
+							Duration = "number",
+							CashValue = "number",
+						},
+						nextOrder = nextOrder,
+					})
+				),
+			}),
+		}),
+
+		MapNPCSpawns = e(PanelGroup, {
+			name = "Map NPCSpawns",
+			layoutOrder = nextOrder(),
+		}, {
+			Attributes = e(Panel, {
+				layoutOrder = nextOrder(),
+			}, {
+				Title = e(PanelComps.Title, {
+					text = "Add Attributes",
+					layoutOrder = nextOrder(),
+				}),
+				Children = e(
+					React.Fragment,
+					nil,
+					e(AttributeList, {
+						attributes = {
+							Universal_Disabled = "boolean",
+							RoundType_Disabled = "number",
+							RateMultiplier = "number",
+						},
+						nextOrder = nextOrder,
+					})
+				),
+			}),
+		}),
+
+		MapClipping = e(PanelGroup, {
+			name = "Map Clipping",
+			layoutOrder = nextOrder(),
+		}, {
+			Attributes = e(Panel, {
+				layoutOrder = nextOrder(),
+			}, {
+				Title = e(PanelComps.Title, {
+					text = "Add Attributes",
+					layoutOrder = nextOrder(),
+				}),
+				Children = e(
+					React.Fragment,
+					nil,
+					e(AttributeList, {
+						attributes = {
+							Entrance = "string",
+						},
 						nextOrder = nextOrder,
 					})
 				),
