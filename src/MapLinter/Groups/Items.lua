@@ -233,5 +233,17 @@ return function(map: Folder): { Types.LintResultPartial }
 		end
 	end
 
+	-- Ensure tagged items are descendants of the items folder
+	for _, item in CollectionService:GetTagged("Item") do
+		if not items:IsAncestorOf(item) then
+			table.insert(results, {
+				ok = false,
+				statusMessage = `Tagged item "{item:GetFullName()}" is not in the items folder.`,
+				subject = item,
+			})
+			break
+		end
+	end
+
 	return results
 end
