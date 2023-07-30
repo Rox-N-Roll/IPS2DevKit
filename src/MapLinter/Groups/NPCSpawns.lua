@@ -1,15 +1,10 @@
 local IPS2DevKit = script.Parent.Parent.Parent
 
+local AttributeIndex = require(IPS2DevKit.AttributeIndex)
 local Types = require(IPS2DevKit.Types)
 local Util = require(IPS2DevKit.Util)
 
 local ZONE_Y_SIZE = 0.05
-
-local allowedAttributes = {
-	RoundType_Disabled = "string",
-	Universal_Disabled = "boolean",
-	RateMultiplier = "number",
-}
 
 return function(map: Folder): { Types.LintResultPartial }
 	local results = {}
@@ -44,7 +39,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			break
 		end
 
-		local isInvalid, invalidName = Util.HasInvalidAttributes(zone, allowedAttributes)
+		local isInvalid, invalidName = Util.HasInvalidAttributes(zone, AttributeIndex.NPCSpawns)
 		if isInvalid then
 			table.insert(results, {
 				ok = false,

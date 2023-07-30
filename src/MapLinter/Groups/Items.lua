@@ -2,14 +2,9 @@ local CollectionService = game:GetService("CollectionService")
 
 local IPS2DevKit = script.Parent.Parent.Parent
 
+local AttributeIndex = require(IPS2DevKit.AttributeIndex)
 local Types = require(IPS2DevKit.Types)
 local Util = require(IPS2DevKit.Util)
-
-local allowedAttributes = {
-	DisplayName = "string",
-	CashValue = "number",
-	Order = "number",
-}
 
 local ItemEval = {}
 
@@ -37,7 +32,7 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 			}
 	end
 
-	local isInvalid, invalidName = Util.HasInvalidAttributes(item, allowedAttributes)
+	local isInvalid, invalidName = Util.HasInvalidAttributes(item, AttributeIndex.Items)
 	if isInvalid then
 		return true,
 			{

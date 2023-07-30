@@ -10,7 +10,7 @@ local Entrances = require(IPS2DevKit.PanelCode.Entrances)
 local AttributeList = require(IPS2DevKit.App.AttributeList)
 local PanelComps = require(IPS2DevKit.App.PanelComps)
 local createNextOrder = require(IPS2DevKit.App.Util.createNextOrder)
-local Util = require(IPS2DevKit.Util)
+local AttributeIndex = require(IPS2DevKit.AttributeIndex)
 
 local e = React.createElement
 
@@ -228,7 +228,7 @@ return function()
 					React.Fragment,
 					nil,
 					e(AttributeList, {
-						attributes = Util.GetAllowedEntranceAttributes(),
+						attributes = AttributeIndex.Entrances,
 						nextOrder = nextOrder,
 					})
 				),
@@ -250,12 +250,7 @@ return function()
 					React.Fragment,
 					nil,
 					e(AttributeList, {
-						attributes = {
-							DisplayName = "string",
-							Order = "number",
-							Duration = "number",
-							CashValue = "number",
-						},
+						attributes = AttributeIndex.Items,
 						nextOrder = nextOrder,
 					})
 				),
@@ -277,11 +272,7 @@ return function()
 					React.Fragment,
 					nil,
 					e(AttributeList, {
-						attributes = {
-							Universal_Disabled = "boolean",
-							RoundType_Disabled = "number",
-							RateMultiplier = "number",
-						},
+						attributes = AttributeIndex.NPCSpawns,
 						nextOrder = nextOrder,
 					})
 				),
@@ -303,9 +294,7 @@ return function()
 					React.Fragment,
 					nil,
 					e(AttributeList, {
-						attributes = {
-							Entrance = "string",
-						},
+						attributes = AttributeIndex.Clipping,
 						nextOrder = nextOrder,
 					})
 				),

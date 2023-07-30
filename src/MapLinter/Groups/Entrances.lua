@@ -2,6 +2,7 @@ local CollectionService = game:GetService("CollectionService")
 
 local IPS2DevKit = script.Parent.Parent.Parent
 
+local AttributeIndex = require(IPS2DevKit.AttributeIndex)
 local Types = require(IPS2DevKit.Types)
 local Util = require(IPS2DevKit.Util)
 
@@ -41,7 +42,7 @@ return function(map: Folder): { Types.LintResultPartial }
 		end
 
 		for _, instance in { entrance, unpack(entrance:GetDescendants()) } do
-			local isInvalid, invalidName = Util.HasInvalidAttributes(instance, Util.GetAllowedEntranceAttributes())
+			local isInvalid, invalidName = Util.HasInvalidAttributes(instance, AttributeIndex.Entrances)
 
 			if isInvalid then
 				table.insert(results, {
