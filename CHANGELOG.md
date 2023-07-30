@@ -1,13 +1,18 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+
+## [v0.6.0] - July 30, 2023
 * Added a lint to prevent scripts in maps
 * Added Map Items, Map NPCSpawns, Map Clipping sections
 * Added lints to tagged instances to ensure they are descendants of their respective map folder
 * Added VisProblems subjects to more lints
+* Added Event_Banana_Station map tag
 * Changed the color of Clip_Player to differ from Clip_Bounds
 * Changed the PanelGroup dropdown visual
 * Fixed entrance linting throwing an error if a node wasn't found
+
+[v0.6.0]: https://github.com/Crystalflxme/IPS2DevKit/releases/tag/v0.6.0
 
 ## [v0.5.0] - July 17, 2023
 * Added a "Map Entrances" section for utility relating to entrances
