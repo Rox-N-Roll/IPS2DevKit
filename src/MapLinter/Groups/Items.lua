@@ -15,10 +15,12 @@ local ItemEval = {}
 
 function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 	if not item:IsA("Model") then
-		return true, {
-			ok = false,
-			statusMessage = `Item "{item.Name}" is an invalid instance.`,
-		}
+		return true,
+			{
+				ok = false,
+				statusMessage = `Item "{item.Name}" is an invalid instance.`,
+				subject = item,
+			}
 	end
 
 	local isCaseItem = item.Name == "Case"
@@ -202,10 +204,12 @@ function ItemEval.IsInvalidItemResolvable(item: Instance): (boolean, Types.LintR
 			end
 		end
 	else
-		return true, {
-			ok = false,
-			statusMessage = `Item "{item.Name}" is an invalid instance.`,
-		}
+		return true,
+			{
+				ok = false,
+				statusMessage = `Item "{item.Name}" is an invalid instance.`,
+				subject = item,
+			}
 	end
 
 	return false, nil

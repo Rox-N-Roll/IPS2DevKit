@@ -30,6 +30,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			table.insert(results, {
 				ok = false,
 				statusMessage = `Found invalid "{zone.Name}" NPC zone instance.`,
+				subject = zone,
 			})
 			break
 		end

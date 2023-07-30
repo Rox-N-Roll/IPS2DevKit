@@ -25,6 +25,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found player clipping "{instance.Name}" is an invalid instance.`,
+					subject = instance,
 				})
 				break
 			end
@@ -62,6 +63,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found entrance clipping "{instance.Name}" is an invalid instance.`,
+					subject = instance,
 				})
 				break
 			end
@@ -100,6 +102,7 @@ return function(map: Folder): { Types.LintResultPartial }
 				table.insert(results, {
 					ok = false,
 					statusMessage = `Found bounds clipping "{instance.Name}" is an invalid instance.`,
+					subject = instance,
 				})
 				break
 			end

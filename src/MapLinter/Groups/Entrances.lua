@@ -44,16 +44,11 @@ return function(map: Folder): { Types.LintResultPartial }
 			local isInvalid, invalidName = Util.HasInvalidAttributes(instance, Util.GetAllowedEntranceAttributes())
 
 			if isInvalid then
-				local res = {
+				table.insert(results, {
 					ok = false,
 					statusMessage = `Entrance "{entrance.Name}" has instance "{instance:GetFullName()}" with invalid "{invalidName}" attribute.`,
-				}
-
-				if instance:IsA("BasePart") then
-					res.subject = instance
-				end
-
-				table.insert(results, res)
+					subject = instance,
+				})
 				break
 			end
 		end
@@ -67,16 +62,11 @@ return function(map: Folder): { Types.LintResultPartial }
 			or node.CanCollide
 			or not CollectionService:HasTag(node, "EntranceNode")
 		then
-			local res = {
+			table.insert(results, {
 				ok = false,
 				statusMessage = `Entrance "{entrance.Name}" has invalid node.`,
-			}
-
-			if node and node:IsA("BasePart") then
-				res.subject = node
-			end
-
-			table.insert(results, res)
+				subject = node,
+			})
 		end
 
 		local seats = entrance:FindFirstChild("Seats")
@@ -135,16 +125,11 @@ return function(map: Folder): { Types.LintResultPartial }
 			local isInvalid, instance = isInvalidPath(path)
 
 			if isInvalid then
-				local res = {
+				table.insert(results, {
 					ok = false,
 					statusMessage = `Entrance "{entrance.Name}" path has invalid children. Do you have stray instances or incorrect properties?`,
-				}
-
-				if instance:IsA("BasePart") then
-					res.subject = instance
-				end
-
-				table.insert(results, res)
+					subject = instance,
+				})
 			end
 		else
 			table.insert(results, {
@@ -173,16 +158,11 @@ return function(map: Folder): { Types.LintResultPartial }
 
 			local isInvalid, instance = isInvalidPath(npcPath)
 			if isInvalid then
-				local res = {
+				table.insert(results, {
 					ok = false,
 					statusMessage = `Entrance "{entrance.Name}" NPC path has invalid children. Do you have stray instances or incorrect properties?`,
-				}
-
-				if instance:IsA("BasePart") then
-					res.subject = instance
-				end
-
-				table.insert(results, res)
+					subject = instance,
+				})
 			end
 		else
 			table.insert(results, {
