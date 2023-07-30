@@ -4,9 +4,9 @@ local React = require(IPS2DevKit.Packages.React)
 local PanelGroup = require(IPS2DevKit.App.Components.PanelGroup)
 local Panel = require(IPS2DevKit.App.Components.Panel)
 local Dummies = require(IPS2DevKit.PanelCode.Dummies)
-local MapLinting = require(IPS2DevKit.PanelCode.MapLinting)
+local Linting = require(IPS2DevKit.PanelCode.Linting)
 local MapMakingAssets = require(IPS2DevKit.PanelCode.MapMakingAssets)
-local MapEntrances = require(IPS2DevKit.PanelCode.MapEntrances)
+local Entrances = require(IPS2DevKit.PanelCode.Entrances)
 local AttributeList = require(IPS2DevKit.App.AttributeList)
 local PanelComps = require(IPS2DevKit.App.PanelComps)
 local createNextOrder = require(IPS2DevKit.App.Util.createNextOrder)
@@ -138,7 +138,7 @@ return function()
 				Run = e(PanelComps.Button, {
 					text = "Run",
 					layoutOrder = nextOrder(),
-					activated = MapLinting.StartAll,
+					activated = Linting.StartAll,
 				}),
 			}),
 
@@ -153,42 +153,42 @@ return function()
 					text = "Global",
 					layoutOrder = nextOrder(),
 					activated = function()
-						MapLinting.Start("Global")
+						Linting.Start("Global")
 					end,
 				}),
 				Items = e(PanelComps.Button, {
 					text = "Items",
 					layoutOrder = nextOrder(),
 					activated = function()
-						MapLinting.Start("Items")
+						Linting.Start("Items")
 					end,
 				}),
 				Entrances = e(PanelComps.Button, {
 					text = "Entrances",
 					layoutOrder = nextOrder(),
 					activated = function()
-						MapLinting.Start("Entrances")
+						Linting.Start("Entrances")
 					end,
 				}),
 				CamLocations = e(PanelComps.Button, {
 					text = "CamLocations",
 					layoutOrder = nextOrder(),
 					activated = function()
-						MapLinting.Start("CamLocations")
+						Linting.Start("CamLocations")
 					end,
 				}),
 				NPCSpawns = e(PanelComps.Button, {
 					text = "NPCSpawns",
 					layoutOrder = nextOrder(),
 					activated = function()
-						MapLinting.Start("NPCSpawns")
+						Linting.Start("NPCSpawns")
 					end,
 				}),
 				Clipping = e(PanelComps.Button, {
 					text = "Clipping",
 					layoutOrder = nextOrder(),
 					activated = function()
-						MapLinting.Start("Clipping")
+						Linting.Start("Clipping")
 					end,
 				}),
 			}),
@@ -208,12 +208,12 @@ return function()
 				CreateNodeAtNPC = e(PanelComps.Button, {
 					text = "Create Path Node at Selected NPC",
 					layoutOrder = nextOrder(),
-					activated = MapEntrances.CreatePathNodeAtNPC,
+					activated = Entrances.CreatePathNodeAtNPC,
 				}),
 				CreateNPCAtNode = e(PanelComps.Button, {
 					text = "Create NPC at Selected Path Node",
 					layoutOrder = nextOrder(),
-					activated = MapEntrances.CreateNPCAtPathNode,
+					activated = Entrances.CreateNPCAtPathNode,
 				}),
 			}),
 

@@ -4,7 +4,7 @@ local VisProblems = require(IPS2DevKit.VisProblems)
 local MapLinter = require(IPS2DevKit.MapLinter)
 local Types = require(IPS2DevKit.Types)
 
-local MapLinting = {}
+local Linting = {}
 
 local function getFolderPosition(folder: Folder): Vector3?
 	local children = folder:GetChildren()
@@ -70,12 +70,12 @@ local function handleResults(category: string, results: { Types.LintResult })
 	print(output)
 end
 
-function MapLinting.StartAll()
+function Linting.StartAll()
 	handleResults("All Groups", MapLinter.All())
 end
 
-function MapLinting.Start(group: string)
+function Linting.Start(group: string)
 	handleResults(group, MapLinter.Group(group))
 end
 
-return MapLinting
+return Linting

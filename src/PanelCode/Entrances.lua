@@ -8,9 +8,9 @@ local RNG = Random.new()
 
 local assets = IPS2DevKit.Assets
 
-local MapEntrances = {}
+local Entrances = {}
 
-function MapEntrances.CreatePathNodeAtNPC()
+function Entrances.CreatePathNodeAtNPC()
 	local npc = Util.GetSelected()
 	if not npc then
 		warn("Nothing selected!")
@@ -54,7 +54,7 @@ function MapEntrances.CreatePathNodeAtNPC()
 	ChangeHistoryService:SetWaypoint("Create Path Node at NPC")
 end
 
-function MapEntrances.CreateNPCAtPathNode()
+function Entrances.CreateNPCAtPathNode()
 	local node = Util.GetSelected()
 	if not node then
 		warn("Nothing selected!")
@@ -73,4 +73,4 @@ function MapEntrances.CreateNPCAtPathNode()
 	ChangeHistoryService:SetWaypoint("Create NPC at Path Node")
 end
 
-return MapEntrances
+return Entrances
