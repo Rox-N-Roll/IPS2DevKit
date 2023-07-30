@@ -121,6 +121,21 @@
 					"Visible": {"Bool": true}
 				}
 			}
+		},
+		{
+			"Name": "Event_Banana_Station",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": {"Bool": false},
+					"Color": {"Color3": [0.996078, 0.968627, 0.164706]},
+					"DrawType": {"String": "Icon"},
+					"Group": {"String": "IPS2 Maps"},
+					"Icon": {"String": "cart_put"},
+					"Visible": {"Bool": true}
+				}
+			}
 		}
 	]
 }
