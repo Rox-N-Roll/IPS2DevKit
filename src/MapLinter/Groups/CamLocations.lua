@@ -3,6 +3,7 @@ local CollectionService = game:GetService("CollectionService")
 local IPS2DevKit = script.Parent.Parent.Parent
 
 local Types = require(IPS2DevKit.Types)
+local Util = require(IPS2DevKit.Util)
 
 local propertyChecks = {
 	"Color",
@@ -28,16 +29,14 @@ return function(map: Folder): { Types.LintResultPartial }
 		return results
 	end
 
-	-- No stray CamLocation tags
-	for _, instance in CollectionService:GetTagged("CamLocation") do
-		if map:IsAncestorOf(instance) and instance.Parent ~= camLocations then
-			table.insert(results, {
-				ok = false,
-				statusMessage = "Stray CamLocation tag found.",
-				subject = instance,
-			})
-			break
-		end
+	-- Ensure tagged camlocations are descendants of the camlocations folder
+	local hasStray, stayLoc = Util.HasStrayInstances(map, camLocations, CollectionService:GetTagged("CamLocation"))
+	if hasStray then
+		table.insert(results, {
+			ok = false,
+			statusMessage = `Tagged CamLocation "{stayLoc:GetFullName()}" is not in the CamLocations folder.`,
+			subject = stayLoc,
+		})
 	end
 
 	-- Ensure there are at least 4 camera locations

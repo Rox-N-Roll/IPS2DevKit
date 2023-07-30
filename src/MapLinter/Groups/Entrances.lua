@@ -30,6 +30,16 @@ return function(map: Folder): { Types.LintResultPartial }
 		return results
 	end
 
+	-- Ensure tagged nodes are descendants of the entrances folder
+	local hasStray, strayNode = Util.HasStrayInstances(map, entrances, CollectionService:GetTagged("EntranceNode"))
+	if hasStray then
+		table.insert(results, {
+			ok = false,
+			statusMessage = `Tagged EntranceNode "{strayNode:GetFullName()}" is not in the Entrances folder.`,
+			subject = strayNode,
+		})
+	end
+
 	-- Verify individual entrances
 	local totalSeats = 0
 	for _, entrance in entrances:GetChildren() do

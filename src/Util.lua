@@ -50,6 +50,16 @@ function Util.HasInvalidAttributes(instance: Instance, allowed: { [string]: stri
 	return false, nil
 end
 
+function Util.HasStrayInstances(map: Folder, ancestor: Instance, instances: { Instance }): (boolean, Instance?)
+	for _, instance in instances do
+		if map:IsAncestorOf(instance) and not ancestor:IsAncestorOf(instance) then
+			return true, instance
+		end
+	end
+
+	return false, nil
+end
+
 function Util.FloatEquals(n0: number, n1: number): boolean
 	return math.abs(n1 - n0) < EPSILON
 end

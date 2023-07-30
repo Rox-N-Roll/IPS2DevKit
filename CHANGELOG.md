@@ -3,7 +3,7 @@
 ## Unreleased Changes
 * Added a lint to prevent scripts in maps
 * Added Map Items, Map NPCSpawns, Map Clipping sections
-* Added a lint to tagged ensure items are descendants of the items folder
+* Added lints to tagged instances to ensure they are descendants of their respective map folder
 * Added VisProblems subjects to more lints
 * Changed the color of Clip_Player to differ from Clip_Bounds
 * Changed the PanelGroup dropdown visual
