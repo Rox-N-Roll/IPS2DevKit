@@ -4,6 +4,7 @@
 * Added a lint to prevent scripts in maps
 * Added Map Items, Map NPCSpawns, Map Clipping sections
 * Changed the color of Clip_Player to differ from Clip_Bounds
+* Changed the PanelGroup dropdown visual
 * Fixed entrance linting throwing an error if a node wasn't found
 
 ## [v0.5.0] - July 17, 2023

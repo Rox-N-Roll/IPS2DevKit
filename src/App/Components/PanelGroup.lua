@@ -55,13 +55,14 @@ return function(props: {
 		LayoutOrder = props.layoutOrder,
 	}, {
 		Control = e("TextButton", {
-			Text = `{if collapsed then ">" else "\\/"} {props.name}`,
+			Text = `<font weight="bold" transparency="0.6">{if collapsed then ">" else "V"}</font> {props.name}`,
 			BackgroundColor3 = theme.button,
 			BorderSizePixel = 0,
 			Size = UDim2.new(1, 0, 0, CONTROL_SIZE),
 			TextColor3 = theme.text,
 			Font = theme.font,
 			TextScaled = true,
+			RichText = true,
 			TextXAlignment = Enum.TextXAlignment.Left,
 
 			[React.Event.Activated] = function()
