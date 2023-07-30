@@ -6,25 +6,6 @@ local Types = require(IPS2DevKit.Types)
 
 local Linting = {}
 
-local function getFolderPosition(folder: Folder): Vector3?
-	local children = folder:GetChildren()
-	local center = Vector3.zero
-	local hasPV = false
-
-	for _, instance in children do
-		if instance:IsA("PVInstance") then
-			center += instance:GetPivot().Position
-			hasPV = true
-		end
-	end
-
-	if hasPV then
-		return center / #children
-	end
-
-	return nil
-end
-
 local function handleResults(category: string, results: { Types.LintResult })
 	local parsedResults = {}
 	local pass = true
@@ -34,22 +15,11 @@ local function handleResults(category: string, results: { Types.LintResult })
 	for _, result in results do
 		if not result.ok then
 			local subj = result.subject
-			if result.subject then
-				local pos
-				if subj:IsA("Folder") then
-					pos = getFolderPosition(subj)
-				elseif subj:IsA("PVInstance") then
-					pos = subj:GetPivot().Position
-				else
-					error("unsupported subject")
-				end
-
-				if pos then
-					VisProblems.Create(subj, pos, {
-						statusMessage = result.statusMessage,
-						group = result.group,
-					})
-				end
+			if subj and VisProblems.IsSupportedSource(subj) then
+				VisProblems.Create(subj, {
+					statusMessage = result.statusMessage,
+					group = result.group,
+				})
 			end
 
 			table.insert(parsedResults, { result.statusMessage, result.group })

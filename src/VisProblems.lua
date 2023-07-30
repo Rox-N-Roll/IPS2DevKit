@@ -3,12 +3,48 @@ local HOLDER_NAME = "_IPS2DevKit_VisProblems"
 
 local VisProblems = {}
 
-function VisProblems.GetHolder(): Folder?
+local function getHolder(): Folder?
 	return workspace:FindFirstChild(HOLDER_NAME)
 end
 
-function VisProblems.Create(source: Instance, position: Vector3, info: { [string]: any })
-	local holder = VisProblems.GetHolder()
+local function getFolderPosition(folder: Folder): Vector3?
+	local children = folder:GetChildren()
+	local center = Vector3.zero
+	local hasPV = false
+
+	for _, instance in children do
+		if instance:IsA("PVInstance") then
+			center += instance:GetPivot().Position
+			hasPV = true
+		end
+	end
+
+	if hasPV then
+		return center / #children
+	end
+
+	return nil
+end
+
+function VisProblems.IsSupportedSource(source: Instance): boolean
+	return source:IsA("Folder") or source:IsA("PVInstance")
+end
+
+function VisProblems.Create(source: Instance, info: { [string]: any })
+	local position
+	if source:IsA("Folder") then
+		position = getFolderPosition(source)
+	elseif source:IsA("PVInstance") then
+		position = source:GetPivot().Position
+	else
+		error("unsupported source")
+	end
+
+	if not position then
+		return
+	end
+
+	local holder = getHolder()
 	if not holder then
 		holder = Instance.new("Folder")
 		holder.Name = HOLDER_NAME
@@ -62,7 +98,7 @@ function VisProblems.Create(source: Instance, position: Vector3, info: { [string
 end
 
 function VisProblems.Clear()
-	local holder = VisProblems.GetHolder()
+	local holder = getHolder()
 	if holder then
 		holder:Destroy()
 	end
