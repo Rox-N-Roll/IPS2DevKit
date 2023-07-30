@@ -3,6 +3,75 @@ local CollectionService = game:GetService("CollectionService")
 local IPS2DevKit = script.Parent.Parent.Parent
 
 local Types = require(IPS2DevKit.Types)
+local Util = require(IPS2DevKit.Util)
+
+local function isInvalidClippingFolder(
+	map: Folder,
+	holder: Folder,
+	name: string,
+	customCondition: ((instance: Instance) -> Types.LintResultPartial?)?
+): (boolean, Types.LintResultPartial?)
+	local clipping = holder:FindFirstChild(name)
+	if not clipping or not clipping:IsA("Folder") then
+		return true, {
+			ok = false,
+			statusMessage = `Unable to find "{name}" clipping folder.`,
+		}
+	end
+
+	local tag = "Clip_" .. name
+	local hasStray, strayClipping = Util.HasStrayInstances(map, clipping, CollectionService:GetTagged(tag))
+	if hasStray then
+		return true,
+			{
+				ok = false,
+				statusMessage = `Tagged {tag} "{strayClipping:GetFullName()}" is not in the {name} clipping folder.`,
+				subject = strayClipping,
+			}
+	end
+
+	for _, instance in clipping:GetChildren() do
+		if not instance:IsA("BasePart") then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Found {name} clipping "{instance.Name}" is an invalid instance.`,
+					subject = instance,
+				}
+		end
+
+		local propertiesCond = if name == "Bounds"
+			then (instance.CanCollide or instance.CanQuery or not instance.CanTouch)
+			else (not instance.CanCollide or not instance.CanQuery or not instance.CanTouch)
+
+		if propertiesCond then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Found {name} clipping "{instance.Name}" has invalid properties.`,
+					subject = instance,
+				}
+		end
+
+		if not CollectionService:HasTag(instance, tag) then
+			return true,
+				{
+					ok = false,
+					statusMessage = `Found {name} clipping "{instance.Name}" is missing the "{tag}" tag.`,
+					subject = instance,
+				}
+		end
+
+		if customCondition then
+			local res = customCondition(instance)
+			if res then
+				return true, res
+			end
+		end
+	end
+
+	return false, nil
+end
 
 return function(map: Folder): { Types.LintResultPartial }
 	local results = {}
@@ -17,138 +86,32 @@ return function(map: Folder): { Types.LintResultPartial }
 		return results
 	end
 
-	-- Ensure player folder exists
-	local player = clipping:FindFirstChild("Player")
-	if player and player:IsA("Folder") then
-		for _, instance in player:GetChildren() do
-			if not instance:IsA("BasePart") then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found player clipping "{instance.Name}" is an invalid instance.`,
-					subject = instance,
-				})
-				break
-			end
-
-			if not instance.CanCollide or not instance.CanQuery or not instance.CanTouch then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found player clipping "{instance.Name}" has invalid properties.`,
-					subject = instance,
-				})
-				break
-			end
-
-			if not CollectionService:HasTag(instance, "Clip_Player") then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found player clipping "{instance.Name}" is missing the "Clip_Player" tag.`,
-					subject = instance,
-				})
-				break
-			end
-		end
-	else
-		table.insert(results, {
-			ok = false,
-			statusMessage = `Unable to find "Player" clipping folder.`,
-		})
-	end
-
-	-- Ensure entrance folder exists
-	local entrance = clipping:FindFirstChild("Entrance")
-	if entrance and entrance:IsA("Folder") then
-		for _, instance in entrance:GetChildren() do
-			if not instance:IsA("BasePart") then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found entrance clipping "{instance.Name}" is an invalid instance.`,
-					subject = instance,
-				})
-				break
-			end
-
-			if not instance.CanCollide or not instance.CanQuery or not instance.CanTouch then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found entrance clipping "{instance.Name}" has invalid properties.`,
-					subject = instance,
-				})
-				break
-			end
-
-			if not CollectionService:HasTag(instance, "Clip_Entrance") then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found entrance clipping "{instance.Name}" is missing the "Clip_Entrance" tag.`,
-					subject = instance,
-				})
-				break
-			end
-		end
-	else
-		table.insert(results, {
-			ok = false,
-			statusMessage = `Unable to find "Entrance" clipping folder.`,
-		})
-	end
-
-	-- Ensure bounds folder exists
-	local bounds = clipping:FindFirstChild("Bounds")
+	-- Validate clipping folders
 	local mapEntrances = map:FindFirstChild("Entrances")
-	if bounds and bounds:IsA("Folder") then
-		for _, instance in bounds:GetChildren() do
-			if not instance:IsA("BasePart") then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found bounds clipping "{instance.Name}" is an invalid instance.`,
-					subject = instance,
-				})
-				break
-			end
-
-			if instance.CanCollide or instance.CanQuery or not instance.CanTouch then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found bounds clipping "{instance.Name}" has invalid properties.`,
-					subject = instance,
-				})
-				break
-			end
-
-			if not CollectionService:HasTag(instance, "Clip_Bounds") then
-				table.insert(results, {
-					ok = false,
-					statusMessage = `Found bounds clipping "{instance.Name}" is missing the "Clip_Bounds" tag.`,
-					subject = instance,
-				})
-				break
-			end
-
-			if mapEntrances then
-				local entranceGoal = instance:GetAttribute("Entrance")
-				if not entranceGoal or not mapEntrances:FindFirstChild(entranceGoal) then
-					table.insert(results, {
-						ok = false,
-						statusMessage = `Found bounds clipping "{instance.Name}" has invalid entrance attribute.`,
-						subject = instance,
-					})
-					break
-				end
-			end
+	local function boundsCustomCondition(instance: Instance): Types.LintResultPartial?
+		if not mapEntrances then
+			return nil
 		end
 
-		if not bounds:FindFirstChild("Broad") then
-			table.insert(results, {
-				ok = false,
-				statusMessage = `Found bounds clipping has no "Broad" parts.`,
-			})
+		local entranceGoal = instance:GetAttribute("Entrance")
+		if entranceGoal and mapEntrances:FindFirstChild(entranceGoal) then
+			return nil
 		end
-	else
-		table.insert(results, {
+
+		return {
 			ok = false,
-			statusMessage = `Unable to find "Bounds" clipping folder.`,
-		})
+			statusMessage = `Found Bounds clipping "{instance.Name}" has invalid entrance attribute.`,
+			subject = instance,
+		}
+	end
+
+	for _, name in { "Player", "Entrance", "Bounds" } do
+		local customCondition = if name == "Bounds" then boundsCustomCondition else nil
+		local isInvalid, res = isInvalidClippingFolder(map, clipping, name, customCondition)
+
+		if isInvalid then
+			table.insert(results, res)
+		end
 	end
 
 	return results
