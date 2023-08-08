@@ -17,7 +17,7 @@ function Util.CreateWidget(plugin: Plugin, name: string): DockWidgetPluginGui
 end
 
 function Util.CreateToggleButton(toolbar: PluginToolbar, widget: DockWidgetPluginGui): () -> ()
-	local button = toolbar:CreateButton(widget.Name, "Opens the utility panel", "rbxassetid://14055993659")
+	local button = toolbar:CreateButton("Toggle Panel", "Toggles the utility panel", "rbxassetid://14055993659")
 
 	local clickConn = button.Click:Connect(function()
 		widget.Enabled = not widget.Enabled
