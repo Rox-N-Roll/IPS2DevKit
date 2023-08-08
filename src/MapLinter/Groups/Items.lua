@@ -229,6 +229,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			continue
 		end
 
+		local found = false
 		for _, descendant in item:GetDescendants() do
 			if not CollectionService:HasTag(descendant, "Item") then
 				continue
@@ -239,6 +240,13 @@ return function(map: Folder): { Types.LintResultPartial }
 				statusMessage = `Nested Item "{descendant:GetFullName()}" found.`,
 				subject = descendant,
 			})
+
+			found = true
+			break
+		end
+
+		if found then
+			break
 		end
 	end
 
