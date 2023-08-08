@@ -4,21 +4,10 @@ local IPS2DevKit = script.Parent.Parent.Parent
 
 local Types = require(IPS2DevKit.Types)
 
-local function isMissingChance(condType: string, cond: Folder): Types.LintResultPartial?
-	if typeof(cond:GetAttribute("Chance")) ~= "number" then
-		return {
-			ok = false,
-			statusMessage = `{condType} "{cond:GetFullName()}" is missing the numerical "Chance" attribute.`,
-			subject = cond,
-		}
-	end
-
-	return nil
-end
-
 return function(map: Folder): { Types.LintResultPartial }
 	local results = {}
 
+	-- Verify conditionals
 	for _, single in CollectionService:GetTagged("Cond_Single") do
 		if not map:IsAncestorOf(results) then
 			continue
@@ -46,12 +35,25 @@ return function(map: Folder): { Types.LintResultPartial }
 			break
 		end
 
-		local invalidRes = if CollectionService:HasTag(single.Parent, "Cond_Group")
-			then isMissingChance("Cond_Group", single.Parent)
-			else isMissingChance("Cond_Single", single)
+		local isGroup = CollectionService:HasTag(single.Parent, "Cond_Group")
+		local chanceSource = if isGroup then single.Parent else single
 
-		if invalidRes then
-			table.insert(results, invalidRes)
+		if isGroup and single:GetAttribute("Chance") ~= nil then
+			table.insert(results, {
+				ok = false,
+				statusMessage = `Cond_Single "{single:GetFullName()}" has unneeded "Chance" attribute.`,
+				subject = single,
+			})
+			break
+		end
+
+		if typeof(chanceSource:GetAttribute("Chance")) ~= "number" then
+			local condType = if isGroup then "Cond_Group" else "Cond_Single"
+			table.insert(results, {
+				ok = false,
+				statusMessage = `{condType} "{chanceSource:GetFullName()}" is missing the numerical "Chance" attribute.`,
+				subject = chanceSource,
+			})
 			break
 		end
 	end
