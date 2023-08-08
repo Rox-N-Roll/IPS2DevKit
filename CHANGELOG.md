@@ -2,10 +2,10 @@
 
 ## Unreleased Changes
 * Added LinkedItem support
-* Updated map tags to newest map format version
 * Added an unneeded LinkedItem lint
 * Added a lint to prevent nested items
 * Added support for a nonstrict items directory
+* Updated map tags to newest map format version
 * Removed lint for stray items
 * Removed SpecialItem lints
 

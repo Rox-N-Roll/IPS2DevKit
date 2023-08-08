@@ -165,7 +165,6 @@ return function(map: Folder): { Types.LintResultPartial }
 			ok = false,
 			statusMessage = "Unable to find Items folder.",
 		})
-		return results
 	end
 
 	-- Ensure items are valid and not nested
