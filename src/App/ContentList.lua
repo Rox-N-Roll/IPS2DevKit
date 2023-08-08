@@ -191,6 +191,13 @@ return function()
 						Linting.Start("Clipping")
 					end,
 				}),
+				Conditionals = e(PanelComps.Button, {
+					text = "Conditionals",
+					layoutOrder = nextOrder(),
+					activated = function()
+						Linting.Start("Conditionals")
+					end,
+				}),
 			}),
 		}),
 

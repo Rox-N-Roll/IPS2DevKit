@@ -1,6 +1,7 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+* Added a lint group for Conditionals
 * Added LinkedItem support
 * Added an unneeded LinkedItem lint
 * Added a lint to prevent nested items
