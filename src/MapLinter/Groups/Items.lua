@@ -223,14 +223,23 @@ return function(map: Folder): { Types.LintResultPartial }
 		return results
 	end
 
-	-- Ensure tagged items are descendants of the items folder
-	local hasStray, strayItem = Util.HasStrayInstances(map, items, CollectionService:GetTagged("Item"))
-	if hasStray then
-		table.insert(results, {
-			ok = false,
-			statusMessage = `Tagged Item "{strayItem:GetFullName()}" is not in the Items folder.`,
-			subject = strayItem,
-		})
+	-- Ensure no nested items
+	for _, item in CollectionService:GetTagged("Item") do
+		if not map:IsAncestorOf(item) then
+			continue
+		end
+
+		for _, descendant in item:GetDescendants() do
+			if not CollectionService:HasTag(descendant, "Item") then
+				continue
+			end
+
+			table.insert(results, {
+				ok = false,
+				statusMessage = `Nested Item "{descendant:GetFullName()}" found.`,
+				subject = descendant,
+			})
+		end
 	end
 
 	-- Ensure items are valid
