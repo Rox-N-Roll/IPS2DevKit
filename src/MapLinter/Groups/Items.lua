@@ -10,6 +10,14 @@ local function isInStack(item: Model): boolean
 	return item.Parent.Name == "ItemStack"
 end
 
+local function isCase(item: Model): boolean
+	return item.Name == "Case"
+end
+
+local function isButtonInteraction(item: Model): boolean
+	return item.Name == "ButtonInteraction"
+end
+
 local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 	if not item:IsA("Model") then
 		return true,
@@ -61,9 +69,7 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 			}
 	end
 
-	local isCaseItem = item.Name == "Case"
-	local isButtonInteractionItem = item.Name == "ButtonInteraction"
-	if isCaseItem then
+	if isCase(item) then
 		local axis = item:FindFirstChild("Axis")
 		if not axis or not axis:IsA("BasePart") then
 			return true,
@@ -93,7 +99,7 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 					subject = item,
 				}
 		end
-	elseif isButtonInteractionItem then
+	elseif isButtonInteraction(item) then
 		local actions = item:FindFirstChild("Actions")
 		if not actions or not actions:IsA("Folder") then
 			return true,
@@ -142,7 +148,7 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 			end
 		end
 
-		if not foundValidPrimary and not isButtonInteractionItem then
+		if not foundValidPrimary and not isButtonInteraction(item) then
 			return true,
 				{
 					ok = false,
@@ -179,7 +185,11 @@ return function(map: Folder): { Types.LintResultPartial }
 			break
 		end
 
-		local nested = false
+		if isCase(item) then
+			continue
+		end
+
+		local hasNestedItems = false
 		for _, descendant in item:GetDescendants() do
 			if not CollectionService:HasTag(descendant, "Item") then
 				continue
@@ -191,11 +201,11 @@ return function(map: Folder): { Types.LintResultPartial }
 				subject = descendant,
 			})
 
-			nested = true
+			hasNestedItems = true
 			break
 		end
 
-		if nested then
+		if hasNestedItems then
 			break
 		end
 	end
