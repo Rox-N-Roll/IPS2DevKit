@@ -1,6 +1,7 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+* Updated map tags to newest map format version
 
 ## [v0.6.0] - July 30, 2023
 * Added a lint to prevent scripts in maps

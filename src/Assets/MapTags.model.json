@@ -3,32 +3,32 @@
 
 	"Children": [
 		{
+			"Name": "CamInteraction",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 0.960784, 0, 0.909804 ] },
+					"DrawType": { "String": "Outline" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "lightning" },
+					"Visible": { "Bool": true }
+				}
+			}
+		},
+		{
 			"Name": "CamLocation",
 			"ClassName": "Configuration",
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": true},
-					"Color": {"Color3": [0.282353, 0.447059, 0.956863]},
-					"DrawType": {"String": "Sphere"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "camera"},
-					"Visible": {"Bool": true}
-				}
-			}
-		},
-		{
-			"Name": "CameraInteraction",
-			"ClassName": "Configuration",
-	
-			"Properties": {
-				"Attributes": {
-					"AlwaysOnTop": {"Bool": false},
-					"Color": {"Color3": [0.960784, 0, 0.909804]},
-					"DrawType": {"String": "Box"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "lightning"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": true },
+					"Color": { "Color3": [ 0.282353, 0.447059, 0.956863 ] },
+					"DrawType": { "String": "Sphere" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "camera" },
+					"Visible": { "Bool": true }
 				}
 			}
 		},
@@ -38,12 +38,12 @@
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": false},
-					"Color": {"Color3": [1, 0.223529, 0.223529]},
-					"DrawType": {"String": "Box"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "brick_delete"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 1, 0.223529, 0.223529 ] },
+					"DrawType": { "String": "Box" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "brick_delete" },
+					"Visible": { "Bool": true }
 				}
 			}
 		},
@@ -53,12 +53,12 @@
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": false},
-					"Color": {"Color3": [0.137255, 0.733333, 1]},
-					"DrawType": {"String": "Box"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "brick_delete"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 0.137255, 0.733333, 1 ] },
+					"DrawType": { "String": "Box" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "brick_delete" },
+					"Visible": { "Bool": true }
 				}
 			}
 		},
@@ -68,12 +68,42 @@
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": false},
-					"Color": {"Color3": [0.984314, 1, 0.215686]},
-					"DrawType": {"String": "Box"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "brick_delete"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 0.984314, 1, 0.215686 ] },
+					"DrawType": { "String": "Box" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "brick_delete" },
+					"Visible": { "Bool": true }
+				}
+			}
+		},
+		{
+			"Name": "Cond_Single",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 0.482353, 1, 0.823529 ] },
+					"DrawType": { "String": "Outline" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "folder_table" },
+					"Visible": { "Bool": true }
+				}
+			}
+		},
+		{
+			"Name": "Cond_Group",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 0.482353, 1, 0.823529 ] },
+					"DrawType": { "String": "Outline" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "folder_table" },
+					"Visible": { "Bool": true }
 				}
 			}
 		},
@@ -83,12 +113,12 @@
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": true},
-					"Color": {"Color3": [1, 0.172549, 0.192157]},
-					"DrawType": {"String": "Sphere"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "flag_red"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": true },
+					"Color": { "Color3": [ 1, 0.172549, 0.192157 ] },
+					"DrawType": { "String": "Sphere" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "flag_red" },
+					"Visible": { "Bool": true }
 				}
 			}
 		},
@@ -98,12 +128,27 @@
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": false},
-					"Color": {"Color3": [0.0509804, 0.8, 0.34902]},
-					"DrawType": {"String": "Box"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "bricks"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 0.0509804, 0.8, 0.34902 ] },
+					"DrawType": { "String": "Outline" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "bricks" },
+					"Visible": { "Bool": true }
+				}
+			}
+		},
+		{
+			"Name": "LinkedItem",
+			"ClassName": "Configuration",
+	
+			"Properties": {
+				"Attributes": {
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 0.529412, 0.329412, 0.992157 ] },
+					"DrawType": { "String": "Outline" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "brick_link" },
+					"Visible": { "Bool": true }
 				}
 			}
 		},
@@ -113,12 +158,12 @@
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": false},
-					"Color": {"Color3": [1, 0.670588, 0]},
-					"DrawType": {"String": "Box"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "package"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": false },
+					"Color": { "Color3": [ 1, 0.670588, 0 ] },
+					"DrawType": { "String": "Outline" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "package" },
+					"Visible": { "Bool": true }
 				}
 			}
 		},
@@ -128,12 +173,12 @@
 	
 			"Properties": {
 				"Attributes": {
-					"AlwaysOnTop": {"Bool": false},
-					"Color": {"Color3": [0.996078, 0.968627, 0.164706]},
-					"DrawType": {"String": "Icon"},
-					"Group": {"String": "IPS2 Maps"},
-					"Icon": {"String": "cart_put"},
-					"Visible": {"Bool": true}
+					"AlwaysOnTop": { "Bool": true },
+					"Color": { "Color3": [ 0.996078, 0.968627, 0.164706 ] },
+					"DrawType": { "String": "Icon" },
+					"Group": { "String": "IPS2 Maps" },
+					"Icon": { "String": "cart_put" },
+					"Visible": { "Bool": true }
 				}
 			}
 		}
