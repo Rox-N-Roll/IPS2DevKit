@@ -9,7 +9,7 @@ return function(map: Folder): { Types.LintResultPartial }
 
 	-- Verify conditionals
 	for _, single in CollectionService:GetTagged("Cond_Single") do
-		if not map:IsAncestorOf(results) then
+		if not map:IsAncestorOf(single) then
 			continue
 		end
 
