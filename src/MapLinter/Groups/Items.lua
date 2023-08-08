@@ -32,6 +32,19 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 			}
 	end
 
+	if
+		CollectionService:HasTag(item, "LinkedItem")
+		and not item:GetAttribute("LinkId")
+		and not item:GetAttribute("TargetLinkId")
+	then
+		return true,
+			{
+				ok = false,
+				statusMessage = `Item "{item:GetFullName()}" has unneeded "LinkedItem" tag.`,
+				subject = item,
+			}
+	end
+
 	local isInvalid, invalidName = Util.HasInvalidAttributes(item, AttributeIndex.Items)
 	if isInvalid then
 		return true,
