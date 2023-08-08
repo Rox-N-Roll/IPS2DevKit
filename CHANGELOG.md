@@ -5,7 +5,9 @@
 * Updated map tags to newest map format version
 * Added an unneeded LinkedItem lint
 * Added a lint to prevent nested items
+* Added support for a nonstrict items directory
 * Removed lint for stray items
+* Removed SpecialItem lints
 
 ## [v0.6.0] - July 30, 2023
 * Added a lint to prevent scripts in maps

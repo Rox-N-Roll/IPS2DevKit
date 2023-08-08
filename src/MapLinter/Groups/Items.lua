@@ -6,6 +6,10 @@ local AttributeIndex = require(IPS2DevKit.AttributeIndex)
 local Types = require(IPS2DevKit.Types)
 local Util = require(IPS2DevKit.Util)
 
+local function isInStack(item: Model): boolean
+	return item.Parent.Name == "ItemStack"
+end
+
 local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 	if not item:IsA("Model") then
 		return true,
@@ -34,6 +38,15 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 			{
 				ok = false,
 				statusMessage = `Item "{item:GetFullName()}" has unneeded "LinkedItem" tag.`,
+				subject = item,
+			}
+	end
+
+	if isInStack(item) and typeof(item:GetAttribute("Order")) ~= "number" then
+		return true,
+			{
+				ok = false,
+				statusMessage = `Item "{item:GetFullName()}" is missing the numerical "Order" attribute.`,
 				subject = item,
 			}
 	end
@@ -142,50 +155,6 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 	return false, nil
 end
 
-local function isInvalidItemResolvable(item: Instance): (boolean, Types.LintResultPartial?)
-	if item:IsA("Model") then
-		local isInvalid, res = isInvalidItem(item)
-		if isInvalid then
-			return true, res
-		end
-	elseif item:IsA("Folder") then
-		if item.Name ~= "ItemStack" then
-			return true,
-				{
-					ok = false,
-					statusMessage = `ItemStack "{item:GetFullName()}" is not named properly.`,
-					subject = item,
-				}
-		end
-
-		for _, childItem in item:GetChildren() do
-			local order = childItem:GetAttribute("Order")
-			if typeof(order) ~= "number" then
-				return true,
-					{
-						ok = false,
-						statusMessage = `Item "{childItem:GetFullName()}" is missing the numerical "Order" attribute.`,
-						subject = item,
-					}
-			end
-
-			local isInvalid, res = isInvalidItem(childItem)
-			if isInvalid then
-				return true, res
-			end
-		end
-	else
-		return true,
-			{
-				ok = false,
-				statusMessage = `Item "{item.Name}" is an invalid instance.`,
-				subject = item,
-			}
-	end
-
-	return false, nil
-end
-
 return function(map: Folder): { Types.LintResultPartial }
 	local results = {}
 
@@ -199,13 +168,19 @@ return function(map: Folder): { Types.LintResultPartial }
 		return results
 	end
 
-	-- Ensure no nested items
+	-- Ensure items are valid and not nested
 	for _, item in CollectionService:GetTagged("Item") do
 		if not map:IsAncestorOf(item) then
 			continue
 		end
 
-		local found = false
+		local isInvalid, res = isInvalidItem(item)
+		if isInvalid then
+			table.insert(results, res)
+			break
+		end
+
+		local nested = false
 		for _, descendant in item:GetDescendants() do
 			if not CollectionService:HasTag(descendant, "Item") then
 				continue
@@ -217,20 +192,11 @@ return function(map: Folder): { Types.LintResultPartial }
 				subject = descendant,
 			})
 
-			found = true
+			nested = true
 			break
 		end
 
-		if found then
-			break
-		end
-	end
-
-	-- Ensure items are valid
-	for _, item in items:GetChildren() do
-		local isInvalid, res = isInvalidItemResolvable(item)
-		if isInvalid then
-			table.insert(results, res)
+		if nested then
 			break
 		end
 	end
