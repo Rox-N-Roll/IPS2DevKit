@@ -70,8 +70,12 @@ function Util.GetSelected(): Instance?
 end
 
 function Util.AddAttribute(name: string, attributeType: string)
-	local added = false
+	local recording = ChangeHistoryService:TryBeginRecording(`Add {name} Attribute`)
+	if not recording then
+		return
+	end
 
+	local added = false
 	for _, instance in Selection:Get() do
 		if instance:GetAttribute(name) ~= nil then
 			continue
@@ -92,9 +96,11 @@ function Util.AddAttribute(name: string, attributeType: string)
 		added = true
 	end
 
-	if added then
-		ChangeHistoryService:SetWaypoint(`Add {name} Attribute`)
+	if not added then
+		warn("Nothing selected!")
 	end
+
+	ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation[if added then "Commit" else "Cancel"])
 end
 
 return Util

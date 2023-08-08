@@ -23,6 +23,11 @@ function Entrances.CreatePathNodeAtNPC()
 		return
 	end
 
+	local recording = ChangeHistoryService:TryBeginRecording("Create Path Node at NPC")
+	if not recording then
+		return
+	end
+
 	local pathHolder
 	local map = workspace:FindFirstChild("Map")
 	if map then
@@ -51,7 +56,7 @@ function Entrances.CreatePathNodeAtNPC()
 	pathNode:PivotTo(hrp.CFrame)
 	pathNode.Parent = pathHolder or workspace
 
-	ChangeHistoryService:SetWaypoint("Create Path Node at NPC")
+	ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation.Commit)
 end
 
 function Entrances.CreateNPCAtPathNode()
@@ -65,12 +70,17 @@ function Entrances.CreateNPCAtPathNode()
 		return
 	end
 
+	local recording = ChangeHistoryService:TryBeginRecording("Create NPC at Path Node")
+	if not recording then
+		return
+	end
+
 	local npcs = assets.Thieves:GetChildren()
 	local npc = npcs[RNG:NextInteger(1, #npcs)]:Clone()
 	npc:PivotTo(node.CFrame)
 	npc.Parent = node.Parent
 
-	ChangeHistoryService:SetWaypoint("Create NPC at Path Node")
+	ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation.Commit)
 end
 
 return Entrances

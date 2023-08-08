@@ -26,6 +26,11 @@ end
 local MapMakingAssets = {}
 
 function MapMakingAssets.CameraLocation()
+	local recording = ChangeHistoryService:TryBeginRecording("Insert Camera Location")
+	if not recording then
+		return
+	end
+
 	local location = Util.GetSpawnLocation(8)
 
 	local camLocations = getSpawnParent("CamLocations")
@@ -40,29 +45,44 @@ function MapMakingAssets.CameraLocation()
 	cutout.Parent = getSpawnParent()
 
 	Selection:Set({ camLocation, cutout })
-	ChangeHistoryService:SetWaypoint("Insert Camera Location")
+	ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation.Commit)
 end
 
 function MapMakingAssets.NPCSpawn()
+	local recording = ChangeHistoryService:TryBeginRecording("Insert NPC Spawn")
+	if not recording then
+		return
+	end
+
 	local template = assets.NPCSpawn:Clone()
 	template.Name = "Part"
 	template:PivotTo(Util.GetSpawnLocation(8))
 	template.Parent = getSpawnParent("NPCSpawns")
 
 	Selection:Set({ template })
-	ChangeHistoryService:SetWaypoint("Insert NPC Spawn")
+	ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation.Commit)
 end
 
 function MapMakingAssets.StandardItemsKit()
+	local recording = ChangeHistoryService:TryBeginRecording("Insert Standard Items Kit")
+	if not recording then
+		return
+	end
+
 	local kit = assets.StandardItemsKit:Clone()
 	kit:PivotTo(Util.GetSpawnLocation(30))
 	kit.Parent = workspace
 
 	Selection:Set({ kit })
-	ChangeHistoryService:SetWaypoint("Insert Standard Items Kit")
+	ChangeHistoryService:FinishRecording(recording, Enum.FinishRecordingOperation.Commit)
 end
 
 function MapMakingAssets.ReconcileMapTags()
+	local recording = ChangeHistoryService:TryBeginRecording("Reconcile Map Tags")
+	if not recording then
+		return
+	end
+
 	local tagList = ServerStorage:FindFirstChild("TagList")
 	if not tagList then
 		tagList = Instance.new("Folder")
@@ -78,9 +98,10 @@ function MapMakingAssets.ReconcileMapTags()
 		end
 	end
 
-	if inserted then
-		ChangeHistoryService:SetWaypoint("Reconcile Map Tags")
-	end
+	ChangeHistoryService:FinishRecording(
+		recording,
+		Enum.FinishRecordingOperation[if inserted then "Commit" else "Cancel"]
+	)
 end
 
 return MapMakingAssets
