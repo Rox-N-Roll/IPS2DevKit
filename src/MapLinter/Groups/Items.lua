@@ -6,9 +6,7 @@ local AttributeIndex = require(IPS2DevKit.AttributeIndex)
 local Types = require(IPS2DevKit.Types)
 local Util = require(IPS2DevKit.Util)
 
-local ItemEval = {}
-
-function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
+local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 	if not item:IsA("Model") then
 		return true,
 			{
@@ -18,12 +16,7 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 			}
 	end
 
-	local isCaseItem = item.Name == "Case"
-	local isButtonInteractionItem = item.Name == "ButtonInteraction"
-	local isSpecialItem = CollectionService:HasTag(item, "SpecialItem")
-	local missingItemTag = not CollectionService:HasTag(item, "Item")
-
-	if missingItemTag and not isSpecialItem then
+	if not CollectionService:HasTag(item, "Item") then
 		return true,
 			{
 				ok = false,
@@ -55,6 +48,8 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 			}
 	end
 
+	local isCaseItem = item.Name == "Case"
+	local isButtonInteractionItem = item.Name == "ButtonInteraction"
 	if isCaseItem then
 		local axis = item:FindFirstChild("Axis")
 		if not axis or not axis:IsA("BasePart") then
@@ -84,13 +79,6 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 					statusMessage = `Item/Case "{item:GetFullName()}" has invalid an case items folder.`,
 					subject = item,
 				}
-		end
-
-		for _, childItem in caseItems:GetChildren() do
-			local isInvalidChild, res = ItemEval.IsInvalidItemResolvable(childItem)
-			if isInvalidChild then
-				return true, res
-			end
 		end
 	elseif isButtonInteractionItem then
 		local actions = item:FindFirstChild("Actions")
@@ -141,7 +129,7 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 			end
 		end
 
-		if not foundValidPrimary and not missingItemTag and not isButtonInteractionItem then
+		if not foundValidPrimary and not isButtonInteractionItem then
 			return true,
 				{
 					ok = false,
@@ -151,37 +139,12 @@ function ItemEval.IsInvalidItem(item: Model): (boolean, Types.LintResultPartial?
 		end
 	end
 
-	if isSpecialItem then
-		local childItems = {}
-
-		local fallbackItems = item:FindFirstChild("FallbackItems")
-		if fallbackItems then
-			for _, childItem in fallbackItems:GetChildren() do
-				table.insert(childItems, childItem)
-			end
-		end
-
-		local extraItems = item:FindFirstChild("ExtraItems")
-		if extraItems then
-			for _, childItem in extraItems:GetChildren() do
-				table.insert(childItems, childItem)
-			end
-		end
-
-		for _, childItem in childItems do
-			local isInvalidChild, res = ItemEval.IsInvalidItemResolvable(childItem)
-			if isInvalidChild then
-				return true, res
-			end
-		end
-	end
-
 	return false, nil
 end
 
-function ItemEval.IsInvalidItemResolvable(item: Instance): (boolean, Types.LintResultPartial?)
+local function isInvalidItemResolvable(item: Instance): (boolean, Types.LintResultPartial?)
 	if item:IsA("Model") then
-		local isInvalid, res = ItemEval.IsInvalidItem(item)
+		local isInvalid, res = isInvalidItem(item)
 		if isInvalid then
 			return true, res
 		end
@@ -206,7 +169,7 @@ function ItemEval.IsInvalidItemResolvable(item: Instance): (boolean, Types.LintR
 					}
 			end
 
-			local isInvalid, res = ItemEval.IsInvalidItem(childItem)
+			local isInvalid, res = isInvalidItem(childItem)
 			if isInvalid then
 				return true, res
 			end
@@ -265,7 +228,7 @@ return function(map: Folder): { Types.LintResultPartial }
 
 	-- Ensure items are valid
 	for _, item in items:GetChildren() do
-		local isInvalid, res = ItemEval.IsInvalidItemResolvable(item)
+		local isInvalid, res = isInvalidItemResolvable(item)
 		if isInvalid then
 			table.insert(results, res)
 			break
