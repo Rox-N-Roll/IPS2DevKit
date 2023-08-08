@@ -15,6 +15,8 @@ return {
 		Order = "number",
 		Duration = "number",
 		CashValue = "number",
+		LinkId = "string",
+		TargetLinkId = "string",
 	},
 	NPCSpawns = {
 		RoundType_Disabled = "string",
