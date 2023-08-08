@@ -307,5 +307,27 @@ return function()
 				),
 			}),
 		}),
+
+		Conditionals = e(PanelGroup, {
+			name = "Conditionals",
+			layoutOrder = nextOrder(),
+		}, {
+			Attributes = e(Panel, {
+				layoutOrder = nextOrder(),
+			}, {
+				Title = e(PanelComps.Title, {
+					text = "Add Attributes",
+					layoutOrder = nextOrder(),
+				}),
+				Children = e(
+					React.Fragment,
+					nil,
+					e(AttributeList, {
+						attributes = AttributeIndex.Conditionals,
+						nextOrder = nextOrder,
+					})
+				),
+			}),
+		}),
 	}
 end

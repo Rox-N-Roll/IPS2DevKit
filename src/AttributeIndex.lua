@@ -26,4 +26,7 @@ return {
 	Clipping = {
 		Entrance = "string",
 	},
+	Conditionals = {
+		Chance = "number",
+	},
 }
