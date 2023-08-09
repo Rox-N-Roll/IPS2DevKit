@@ -1,6 +1,8 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+
+## [v0.7.0] - August 8, 2023
 * Added a lint group for Conditionals
 * Added a section for Conditionals
 * Added LinkedItem support
@@ -8,8 +10,11 @@
 * Added a lint to prevent nested items
 * Added support for a nonstrict items directory
 * Updated map tags to newest map format version
+* Updated the Studio plugin toolbar
 * Removed lint for stray items
 * Removed SpecialItem lints
+
+[v0.7.0]: https://github.com/Crystalflxme/IPS2DevKit/releases/tag/v0.7.0
 
 ## [v0.6.0] - July 30, 2023
 * Added a lint to prevent scripts in maps
