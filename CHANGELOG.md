@@ -1,6 +1,7 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+* Added support for CamLocations and NPCSpawns in conditionals
 * Added support for a nonstrict NPCSpawns directory
 * Added a lint for a Geometry folder
 

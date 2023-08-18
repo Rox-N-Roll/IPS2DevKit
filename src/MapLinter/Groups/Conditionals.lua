@@ -13,8 +13,18 @@ return function(map: Folder): { Types.LintResultPartial }
 			continue
 		end
 
+		local children = {
+			"Items",
+			"Geometry",
+			"NPCSpawns",
+			"CamLocations",
+			"FallbackItems",
+			"FallbackGeometry",
+			"FallbackNPCSpawns",
+			"FallbackCamLocations",
+		}
+
 		local exit = false
-		local children = { "Items", "Geometry", "FallbackItems", "FallbackGeometry" }
 		for _, child in single:GetChildren() do
 			local index = table.find(children, child.Name)
 			if not index then
