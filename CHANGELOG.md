@@ -1,6 +1,8 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+
+## [v0.8.0] - August 18, 2023
 * Added support for CamLocations and NPCSpawns in conditionals
 * Added Link lint group and changed LinkedItems to Link
 * Added support for a nonstrict NPCSpawns directory
@@ -8,6 +10,8 @@
 * Added a lint for a Geometry folder
 * Updated the ButtonInteraction format
 * Removed Cases
+
+[v0.8.0]: https://github.com/Crystalflxme/IPS2DevKit/releases/tag/v0.8.0
 
 ## [v0.7.0] - August 8, 2023
 * Added a lint group for Conditionals
