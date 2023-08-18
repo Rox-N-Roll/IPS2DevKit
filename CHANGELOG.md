@@ -1,6 +1,7 @@
 # IPS2DevKit Changelog
 
 ## Unreleased Changes
+* Add lint for a Geometry folder
 
 ## [v0.7.0] - August 8, 2023
 * Added a lint group for Conditionals

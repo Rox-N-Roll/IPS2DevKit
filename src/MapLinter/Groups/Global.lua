@@ -22,5 +22,13 @@ return function(map: Folder): { Types.LintResultPartial }
 		end
 	end
 
+	local geometry = map:FindFirstChild("Geometry")
+	if not geometry or not geometry:IsA("Folder") then
+		table.insert(results, {
+			ok = false,
+			statusMessage = "Unable to find Geometry folder.",
+		})
+	end
+
 	return results
 end
