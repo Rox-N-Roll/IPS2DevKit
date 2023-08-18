@@ -2,6 +2,7 @@
 
 ## Unreleased Changes
 * Added support for CamLocations and NPCSpawns in conditionals
+* Added Link lint group and changed LinkedItems to Link
 * Added support for a nonstrict NPCSpawns directory
 * Added support for the DisplayAction attribute
 * Added a lint for a Geometry folder

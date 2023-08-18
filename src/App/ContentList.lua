@@ -198,6 +198,13 @@ return function()
 						Linting.Start("Conditionals")
 					end,
 				}),
+				Links = e(PanelComps.Button, {
+					text = "Links",
+					layoutOrder = nextOrder(),
+					activated = function()
+						Linting.Start("Links")
+					end,
+				}),
 			}),
 		}),
 

@@ -37,19 +37,6 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 			}
 	end
 
-	if
-		CollectionService:HasTag(item, "LinkedItem")
-		and not item:GetAttribute("LinkId")
-		and not item:GetAttribute("TargetLinkId")
-	then
-		return true,
-			{
-				ok = false,
-				statusMessage = `Item "{item:GetFullName()}" has unneeded "LinkedItem" tag.`,
-				subject = item,
-			}
-	end
-
 	if isInStack(item) and typeof(item:GetAttribute("Order")) ~= "number" then
 		return true,
 			{
