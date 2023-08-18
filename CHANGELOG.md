@@ -3,6 +3,7 @@
 ## Unreleased Changes
 * Added support for CamLocations and NPCSpawns in conditionals
 * Added support for a nonstrict NPCSpawns directory
+* Added support for the DisplayAction attribute
 * Added a lint for a Geometry folder
 
 ## [v0.7.0] - August 8, 2023

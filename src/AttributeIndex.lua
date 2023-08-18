@@ -12,6 +12,7 @@ return {
 	},
 	Items = {
 		DisplayName = "string",
+		DisplayAction = "string",
 		Order = "number",
 		Duration = "number",
 		CashValue = "number",
