@@ -15,6 +15,7 @@ return {
 		DisplayAction = "string",
 		Order = "number",
 		Duration = "number",
+		MoveItems = "boolean",
 		CashValue = "number",
 		LinkId = "string",
 		TargetLinkId = "string",

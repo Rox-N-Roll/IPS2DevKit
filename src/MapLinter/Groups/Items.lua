@@ -7,11 +7,11 @@ local Types = require(IPS2DevKit.Types)
 local Util = require(IPS2DevKit.Util)
 
 local function isInStack(item: Model): boolean
-	return item.Parent.Name == "ItemStack"
+	return string.find(item:GetFullName(), ".ItemStack.") ~= nil
 end
 
-local function isCase(item: Model): boolean
-	return item.Name == "Case"
+local function isInAssembly(item: Model): boolean
+	return string.find(item:GetFullName(), ".AssemblyItems.") ~= nil
 end
 
 local function isButtonInteraction(item: Model): boolean
@@ -69,73 +69,43 @@ local function isInvalidItem(item: Model): (boolean, Types.LintResultPartial?)
 			}
 	end
 
-	if isCase(item) then
-		local axis = item:FindFirstChild("Axis")
-		if not axis or not axis:IsA("BasePart") then
+	if isButtonInteraction(item) then
+		local assembly = item:FindFirstChild("Assembly")
+		if not assembly or not assembly:IsA("Model") or not assembly.PrimaryPart then
 			return true,
 				{
 					ok = false,
-					statusMessage = `Item/Case "{item:GetFullName()}" has an invalid axis.`,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid Assembly.`,
 					subject = item,
 				}
 		end
 
-		local goal = axis:FindFirstChild("Goal")
-		if not goal or not goal:IsA("BasePart") then
+		local assemblyOrigin = item:FindFirstChild("AssemblyOrigin")
+		if not assemblyOrigin or not assemblyOrigin:IsA("BasePart") then
 			return true,
 				{
 					ok = false,
-					statusMessage = `Item/Case "{item:GetFullName()}" has an invalid goal.`,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid AssemblyOrigin.`,
 					subject = item,
 				}
 		end
 
-		local caseItems = item:FindFirstChild("CaseItems")
-		if not caseItems or not caseItems:IsA("Folder") then
+		local assemblyTarget = item:FindFirstChild("AssemblyTarget")
+		if not assemblyTarget or not assemblyTarget:IsA("BasePart") then
 			return true,
 				{
 					ok = false,
-					statusMessage = `Item/Case "{item:GetFullName()}" has invalid an case items folder.`,
-					subject = item,
-				}
-		end
-	elseif isButtonInteraction(item) then
-		local actions = item:FindFirstChild("Actions")
-		if not actions or not actions:IsA("Folder") then
-			return true,
-				{
-					ok = false,
-					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid actions folder.`,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid AssemblyTarget.`,
 					subject = item,
 				}
 		end
 
-		local doorOrigin = actions:FindFirstChild("DoorOrigin")
-		if not doorOrigin or not doorOrigin:IsA("BasePart") then
+		local assemblyItems = item:FindFirstChild("AssemblyItems")
+		if assemblyItems and not assemblyItems:IsA("Folder") then
 			return true,
 				{
 					ok = false,
-					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid origin.`,
-					subject = item,
-				}
-		end
-
-		local doorTarget = actions:FindFirstChild("DoorTarget")
-		if not doorTarget or not doorTarget:IsA("BasePart") then
-			return true,
-				{
-					ok = false,
-					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid target.`,
-					subject = item,
-				}
-		end
-
-		local door = actions:FindFirstChild("Door")
-		if not door or not door:IsA("Model") or not door.PrimaryPart then
-			return true,
-				{
-					ok = false,
-					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid door.`,
+					statusMessage = `Item/ButtonInteraction "{item:GetFullName()}" has an invalid AssemblyItems container.`,
 					subject = item,
 				}
 		end
@@ -185,7 +155,7 @@ return function(map: Folder): { Types.LintResultPartial }
 			break
 		end
 
-		if isCase(item) then
+		if isInAssembly(item) then
 			continue
 		end
 
