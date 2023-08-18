@@ -20,14 +20,9 @@ return function(map: Folder): { Types.LintResultPartial }
 	end
 
 	-- Ensure each zone is valid
-	for _, zone in npcSpawns:GetChildren() do
+	for _, zone in npcSpawns:GetDescendants() do
 		if not zone:IsA("Part") then
-			table.insert(results, {
-				ok = false,
-				statusMessage = `Found invalid "{zone.Name}" NPC zone instance.`,
-				subject = zone,
-			})
-			break
+			continue
 		end
 
 		if zone.CanCollide or zone.CanTouch or zone.CanQuery or not Util.FloatEquals(zone.Size.Y, ZONE_Y_SIZE) then
