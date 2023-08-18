@@ -7,11 +7,12 @@ on:
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Checkout master
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Aftman

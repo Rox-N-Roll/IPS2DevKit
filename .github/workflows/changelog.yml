@@ -1,4 +1,4 @@
-name: Changelog Check
+name: Changelog
 
 on:
   pull_request:
@@ -15,10 +15,11 @@ on:
       - website/**
 
 jobs:
-  changelog:
+  check:
+    name: Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master
+      - name: Checkout code
         uses: actions/checkout@v3
     
       - name: Changelog check

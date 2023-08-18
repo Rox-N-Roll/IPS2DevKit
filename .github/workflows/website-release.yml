@@ -1,4 +1,4 @@
-name: Deploy Website
+name: Website Release
 
 on:
   push:
@@ -9,7 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  website-deploy:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -17,7 +18,7 @@ jobs:
       run:
         working-directory: website
     steps:
-      - name: Checkout master
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Node

@@ -13,11 +13,12 @@ on:
       - website/**
 
 jobs:
-  build:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - name: Checkout master
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Aftman
@@ -30,17 +31,38 @@ jobs:
         run: |
           selene generate-roblox-std
           selene src
+  style:
+    name: Styling
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Format
+      - name: Setup Aftman
+        uses: ok-nick/setup-aftman@v0.3.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.2.7
+
+      - name: Check code style
         run: stylua --check src
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Aftman
+        uses: ok-nick/setup-aftman@v0.3.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.2.7
 
       - name: Install packages
         run: wally install
 
       - name: Build plugin
         run: rojo build -o IPS2DevKit.rbxm
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: IPS2DevKit.rbxm
-          path: IPS2DevKit.rbxm
