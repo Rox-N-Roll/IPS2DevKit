@@ -28,6 +28,8 @@ return {
 	},
 	Conditionals = {
 		Chance = "number",
+		DialogueContent = "string",
+		DialoguePriority = "number",
 	},
 	Links = {
 		LinkId = "string",

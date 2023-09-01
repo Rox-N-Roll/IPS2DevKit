@@ -2,6 +2,7 @@
 
 ## Unreleased Changes
 * Moved Link attributes to new Link section
+* Added new attributes for Conditionals
 
 ## [v0.8.0] - August 18, 2023
 * Added support for CamLocations and NPCSpawns in conditionals
