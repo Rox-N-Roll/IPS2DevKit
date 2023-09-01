@@ -17,8 +17,6 @@ return {
 		Duration = "number",
 		MoveItems = "boolean",
 		CashValue = "number",
-		LinkId = "string",
-		TargetLinkId = "string",
 	},
 	NPCSpawns = {
 		RoundType_Disabled = "string",
@@ -30,5 +28,9 @@ return {
 	},
 	Conditionals = {
 		Chance = "number",
+	},
+	Links = {
+		LinkId = "string",
+		TargetLinkId = "string",
 	},
 }

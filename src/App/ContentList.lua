@@ -336,5 +336,27 @@ return function()
 				),
 			}),
 		}),
+
+		Links = e(PanelGroup, {
+			name = "Links",
+			layoutOrder = nextOrder(),
+		}, {
+			Attributes = e(Panel, {
+				layoutOrder = nextOrder(),
+			}, {
+				Title = e(PanelComps.Title, {
+					text = "Add Attributes",
+					layoutOrder = nextOrder(),
+				}),
+				Children = e(
+					React.Fragment,
+					nil,
+					e(AttributeList, {
+						attributes = AttributeIndex.Links,
+						nextOrder = nextOrder,
+					})
+				),
+			}),
+		}),
 	}
 end
