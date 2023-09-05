@@ -2,57 +2,28 @@
 sidebar_position: 1
 ---
 
-# Getting Started
+# Foundations of a Layout 
 
-Any user can create and upload a map that can be added to In Plain Sight 2.
+The first and most important step of mapmaking for Ips2, if not any game is the layout. The layout should feel fresh and new, along with replicating and expanding on gameplay that works and is enjoyed in the current game.  Each room should be important or viable in its own way, such as providing a connection between 2+ areas, being the home-place to a mechanic or dropoff, or just being a vault-like room. (WIP)
 
-Making a map is a daunting and difficult task, especially when creating one alone.
-The tips and steps in this script will help you and any collaborators with making an IPS2 map.
+# Loops
 
-=> [Step 1: The Idea]
-Come up with an idea! Make sure your map is interesting and something you would want to have in the game.
-Think of a map that you think the game needs or something you'd find fun.
-For example...
-Stealing from a spaceship. What interesting gameplay can come from stealing in space?
-Because this is a sci-fi setting, maybe there's futuristic transport tubes, lasers, and air locks.
+Layouts should essentially form one or multiple loops, or a big circular connection of rooms that allows for a good intertwined layout that doesn’t rely on one room to reach every room (ie a hallway).
 
-=> [Step 2: Acquire the tools]
-Get a copy of the IPS2 submission kit from here: 
-This is a requirement for map making, as the studio file has the required tags set up.
-Install the Tag Editor plugin. The plugin can be found here: 
-The Tag Editor plugin allows you to tag instances for scripts to use, such as the Item tag to indicate stealable items.
-	
-=> [Step 3: Making the Map]
-=> [Step 3a: Layout]
-The first and most important step of making a map is to make the layout.
-When making a map, you first want to start a process called grayboxing.
-Grayboxing is the process of making a rough representation of the map, without taking the time to do things such as modeling items or detailing the map.
-This is essentially a sketch, but for a map, rather than a drawing.
-Grayboxing is important to do first so you don't have to change the layout later and throw away all the time spent modeling or detailing.
-Frequently test your grayboxed map by clicking the Test tab and clicking Play.
-Make sure it's fun to run around as a default character in this grayboxed map.
+Examples of well made loops include: 
 
-	
-Once you have something good, start decorating and add items.
-	
-Here are some general tips to be successful (very important):
-- Remake the gameplay that you find fun in the maps currently in the game
-- Don't make it too wide open: stick to rooms
-- Don't make your rooms too cramped: the thieves should have a fair amount room to look and move around
-- Make sure to consider height variation! A map that is all on one floor can get boring
-- Very important: organize your map's parts in the Explorer window with famed folders and models
-- Make mostly your own item models! Maps that mostly use the given standard item assets won't be considered
-- Keep item models in a named folder titled "Items" and name the models as how they should appear in-game
-- Avoid weird camera angles from the camera hatches on the thieves
-- Make sure to be creative! It gives you a higher chance for your work to be seriously considered.
-	
-How to use the placeholders (REQUIRED):
-- Placeholders are used to indicate where you want certain map features
-- "Camera" placeholders should be used to indicate where a camera hatch should be
-- "Drop Off" placeholders should be the locations where thieves can drop off their loot and escape the map
-- "Exit Van" placeholders indicate where the exit van should be for thieves entering and exiting the map
-- "No NPCs" placeholders should be located where you don't want crowds of NPCs spawning
+- Police station 2F > On PS, there is a fairly subtle yet commonly used loop between Cells > Hall > Evidence Room > Balcony > Cells, this loop is well designed and can be easily deviated from for any possible reason. The loop includes the balcony dropoff and can be expanded on to include the window dropoff aswell. The loop is well hidden with use of different setpieces and rooms such as Cells, and the Evidence Room. Ontop of this the loop feels natural as you are pushed into cells as the hall from the window dropoff ends, which in turn pushes you into the balcony. Thats why at times its hard to tell balcony is an entirely isolated hallway since it blends and weaves into its connecting rooms visually and gameplay wise incredibly well.
 
-=> [Step 4: Upload and Submit]
-Upload your map and make sure you allow copying on the model. Lastly, compile all your work into one message and send it on our
-communications server (linked below the In Plain Sight 2 game page in the social links section) in the correct channel for submissions.
+- Farm Full Map > The entirety of farm is one big well hidden loop, hidden solely via setpieces and different settings such as the Shop and Barn. Along with this is utilizes the farmhouse to create a shortcut between the loop to allow for flanks and breakpoints between looping. The loop in farm includes every dropoff, with the most convenient being Barn and River, all while still ensuring every location is a viable exit. All around a great loop gameplay wise and visually.
+
+- Restaurant 1 & 2F loop > While not being utilized nearly as often as the first 2, restaurant still has the ability to loop around the map in a continuous circle, with a fair amount of break points and areas to deviate from the loop. On the first floor you can loop from the break room to the garage, back to the break room, going through all of the staff segments along with passing by the freezer and staircase. The second floor has a significantly more linear loop, although still being hidden by the setpiece of the lounge. On the second floor there are many ways to deviate and leave the loop. The only major issue with the 2nd floor loop being how the seating areas can feel a tad bit like hallways gameplay wise, but this is solved by having the break points and stairs at either ends of halls, along with having a fair share of items to boot.
+
+- Complex APTS > In Complex there is the upper floor loop which weaves inbetween apartments and other various setpieces such as the construction and elevator room. The loop itself has 2 dropoffs along with having a minor shortcut within the loop. Small issues with this loop is the lack of easy breakaway from the loop unlike the PS loop, with the major places to deviate from the loop being the Lounge, Construction, and Elevator rooms being the only places. The loop is well hidden in the scenery via several different ways of hiding entrances / exits to rooms in a natural way that makes each area flow into the next, all around making it a fairly hidden loop. 
+
+# Layout No-Gos
+
+- At all costs avoid straight hallways, along with T halls. These are brutal for players and overpowered for cameras, along with not having much room for creative item placement or unique gameplay.
+
+- Avoid rooms with one way in, one way out. Rooms like these make it so a thief is trapped in whenever a camera is in the same room, as as-long as the camera patrols the one door the thief will not have any way in, or out without being spotted (Basically a choke point).
+
+(this is heavy WIP)
